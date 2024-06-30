@@ -1,0 +1,20 @@
+#
+    about.singkong
+    About
+
+    https://github.com/nopri/template
+    based on Bakwan: https://github.com/nopri/bakwan
+    Started by: Noprianto <nop@noprianto.com>
+;
+
+var about_form = fn() {
+    var about_grid = component("grid", "")
+    var about_title = component("label", 
+        _("title_about") + " " + ctx["name"], true)
+
+    var r = []
+    custom_dialog(about_grid, _("title_about"), 
+        ctx["dialog_width_2"], ctx["dialog_height_2"], true, r
+    )
+}
+
