@@ -10,6 +10,7 @@
 var system_auth_len = 4
 
 var system_auth = fn(u, p) {
+    delay(4000)
     return [u, 0, {}, @]
 }
 

@@ -7,7 +7,7 @@
     Started by: Noprianto <nop@noprianto.com>
 ;
 
-require(9.7)
+require(9.8)
 load_module("ui_util")
 
 load_file_or_resource("system.singkong")
@@ -156,7 +156,9 @@ var r_auth = repeat {
     if (len(r) > 1) {
         var u = r[0]
         var p = r[1]
+        var px = popup_show_progress() 
         var r_auth = system_auth(u, p)
+        popup_hide(px)
         if (r_auth == null) {
             message(
                 _("error_db_connect"),
