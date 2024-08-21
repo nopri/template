@@ -1,0 +1,48 @@
+#
+    data directory
+    example (Apache HTTP Server on Linux):
+    var b = "/var/www/html/data/"
+    enable .htaccess and add:
+        Require all denied
+
+    example (IIS):
+    var b = "c:/inetpub/wwwroot/data/"
+;
+var b = "c:/inetpub/wwwroot/web/template-web/data/"
+var f = b + "template.web"
+var d = b + "data.post.html"
+
+var t = "Post"
+var p = "post.web"
+var c = "post"
+
+var data = {
+    "a": ["Post A", "Contents of Post A"],
+    "b": ["Post B", "Contents of Post B"],
+    "c": ["Post C", "Contents of Post C"]
+}
+
+load(f)
+cgi_header()
+var h = header(t, p, c)
+println(h)
+
+var g = cgi_get()
+var gid = g["id"]
+if (in(keys(data), gid)) {
+    var n = data[gid] 
+    println(content(read(d), [
+        ["$POST_ITEM", ""],
+        ["$POST_TITLE", n[0]],
+        ["$POST_CONTENTS", n[1]]
+    ]))
+} else {
+    println(content(read(d), [
+        ["$POST_ITEM", content_list(data, p)],
+        ["$POST_TITLE", ""],
+        ["$POST_CONTENTS", ""]
+    ]))
+}
+var h = footer(p)
+println(h)
+

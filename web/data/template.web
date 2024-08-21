@@ -1,0 +1,82 @@
+var resource = [
+    ["home", "index.web", "Home"],
+    ["post", "post.web", "Post"]
+]
+
+var category = {
+    "post": [
+        "post.web"
+    ]
+}
+
+var menu = fn(p, c) {
+    var ret = []
+    each(resource, fn(e, i) {
+        var x = ""
+        if (e[1] == p | e[0] == c) {
+            var x = " style='font-weight: bold;'"
+        }
+        var m = " 
+        <span" + x + ">
+            <a href='" + e[1] + "'>" + e[2] + "</a>
+        </span>"
+        ret + m
+    })
+    return join(newline(), ret)
+}
+
+var header = fn(t, p, c) {
+    return "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>" + t + "</title>
+</head>
+<body>
+    NAME
+    <hr>
+" + menu(p, c) + "
+    <hr>
+"
+}
+
+var content = fn(c, r) {
+    var ret = [c]
+    if (is(r, "ARRAY")) {
+        if (!empty(r)) {
+            each(r, fn(e, i) {
+                set(ret, 0, replace(ret[0], e[0], e[1]))
+            })
+            return ret[0]
+        }
+    }
+    return ret[0]
+}
+
+var content_list = fn(a, p) {
+    var ret = []
+    if (is(a, "HASH")) {
+        ret + "<ul>"
+        each(keys(a), fn(e, i) {
+            var v = a[e]
+            var n = "<li>
+                <a href='" + 
+                    p + "?id=" + e + "'>" + 
+                    v[0] + 
+                "</a>
+            </li>"
+            ret + n
+        })
+        ret + "</ul>"
+    }
+    return join(newline(), ret)
+}
+
+var footer = fn(p) {
+    return "
+</body>
+</html>
+"
+}
+
