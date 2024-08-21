@@ -193,5 +193,5 @@ Alma Linux and Rocky Linux
 - Download Singkong.jar and save to /opt
   curl https://nopri.github.io/Singkong.jar -o /opt/Singkong.jar
 
-Where to save *.web files: /var/www/html/
+- Where to save *.web files: /var/www/html/
 
