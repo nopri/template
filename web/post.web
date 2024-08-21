@@ -8,7 +8,7 @@
     example (IIS):
     var b = "c:/inetpub/wwwroot/data/"
 ;
-var b = "c:/inetpub/wwwroot/web/template-web/data/"
+var b = ""
 var f = b + "template.web"
 var d = b + "data.post.html"
 

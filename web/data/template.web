@@ -1,3 +1,5 @@
+require(9.8)
+
 var resource = [
     ["home", "index.web", "Home"],
     ["post", "post.web", "Post"]
