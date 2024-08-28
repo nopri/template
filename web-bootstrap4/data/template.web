@@ -13,17 +13,23 @@ var category = {
 
 var menu = fn(p, c) {
     var ret = []
+    ret + "
+        <ul class='navbar-nav mr-auto'>
+    "
     each(resource, fn(e, i) {
         var x = ""
         if (e[1] == p | e[0] == c) {
-            var x = " style='font-weight: bold;'"
+            var x = " active"
         }
         var m = " 
-        <span" + x + ">
-            <a href='" + e[1] + "'>" + e[2] + "</a>
-        </span>"
+        <li class='nav-item" + x + "'>
+            <a class='nav-link' href='" + e[1] + "'>" + e[2] + "</a>
+        </li>"
         ret + m
     })
+    ret + "
+        </ul>
+    "
     return join(newline(), ret)
 }
 
@@ -32,14 +38,41 @@ var header = fn(t, p, c) {
 <html lang='en'>
 <head>
     <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <link rel='stylesheet' href='lib/css/bootstrap.min.css'>
+    <style>
+        body {
+            min-height: 75rem;
+            padding-top: 5rem;
+        }
+
+        .navbar-dark .nav-item .nav-link {
+            color: #ffffff;
+        }
+        
+        .navbar-nav > .active > a {
+            text-decoration: underline;
+        }
+
+        .custom {
+            background-color: #000000 !important;
+        }
+    </style>
     <title>" + t + "</title>
 </head>
 <body>
-    NAME
-    <hr>
+    <nav class='navbar navbar-expand-md fixed-top navbar-dark bg-dark custom'>
+        <a class='navbar-brand' href='index.web'>NAME</a>
+        <button class='navbar-toggler'
+            type='button' data-toggle='collapse' 
+            data-target='#navbarCollapse'> 
+            <span class='navbar-toggler-icon'></span>
+        </button>
+        <div class='collapse navbar-collapse' id='navbarCollapse'>
 " + menu(p, c) + "
-    <hr>
+        </div>
+    </nav>
+    <div class='container'>
 "
 }
 
@@ -85,6 +118,9 @@ var content_title = fn(t) {
 
 var footer = fn(p) {
     return "
+    </div>
+    <script src='lib/js/jquery-3.7.1.min.js'></script>
+    <script src='lib/js/bootstrap.bundle.min.js'></script>
 </body>
 </html>
 "

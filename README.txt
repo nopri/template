@@ -1,10 +1,11 @@
 Application Template 
 for application written in Singkong programming language
-    
+
 Singkong.jar:
     Download from https://nopri.github.io/Singkong.jar
 
 Templates:
+(Apache-2.0 license)
 ------------------------------------------------------------
 gui-login:
     GUI with login
@@ -16,6 +17,14 @@ gui-login:
 
 web:
     Web: public, HTML only
+    
+    Please read how to configure web server
+    Apache HTTP Server: please enable .htaccess for data dir
+
+web-bootstrap4:
+    Web: public, using Bootstrap 4
+    Navbar based on Navbar fixed example
+    Bundled with Bootstrap and jQuery in lib dir
 
     Please read how to configure web server
     Apache HTTP Server: please enable .htaccess for data dir
