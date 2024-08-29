@@ -1,0 +1,18 @@
+#
+    system.singkong
+    System
+
+    https://github.com/nopri/template
+    based on Bakwan: https://github.com/nopri/bakwan
+    Started by: Noprianto <nop@noprianto.com>
+;
+
+var system_privileges_template = fn() {
+    return {
+        _select: false,
+        _insert: false,
+        _update: false,
+        _delete: false
+    }
+}
+

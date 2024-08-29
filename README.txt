@@ -7,8 +7,18 @@ Singkong.jar:
 Templates:
 (Apache-2.0 license)
 ------------------------------------------------------------
+gui:
+    GUI
+    (menubar, tab, statusbar, thread)
+
+    based on gui-login template
+
+    How to run:
+    java -jar Singkong.jar main.singkong
+
 gui-login:
     GUI with login
+    (login, popup progress, menubar, tab, statusbar, thread)
 
     based on Bakwan: https://github.com/nopri/bakwan
 
@@ -17,12 +27,14 @@ gui-login:
 
 web:
     Web: public, HTML only
+    (header/footer, link, query string)
     
     Please read how to configure web server
     Apache HTTP Server: please enable .htaccess for data dir
 
 web-bootstrap4:
     Web: public, using Bootstrap 4
+    (header/footer, navbar, query string)
     Navbar based on Navbar fixed example
     Bundled with Bootstrap and jQuery in lib dir
 

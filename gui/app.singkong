@@ -1,0 +1,148 @@
+#
+    app.singkong
+    GUI Application Template
+
+    https://github.com/nopri/template
+    based on Bakwan: https://github.com/nopri/bakwan
+    Started by: Noprianto <nop@noprianto.com>
+;
+
+require(9.8)
+load_module("ui_util")
+
+load_file_or_resource("system.singkong")
+load_file_or_resource("message.singkong")
+load_file_or_resource("about.singkong")
+load_file_or_resource("dashboard.singkong")
+
+var app_name = "Template"
+
+var _select = "select"
+var _insert = "insert"
+var _update = "update"
+var _delete = "delete"
+
+var _ = fn(k) {
+    var m = message_msg[k]
+    if (m == null) {
+        return k
+    }
+    return m
+}
+
+var _u = fn(k) {
+    return upper(_(k), true)
+}
+
+var _m = fn(k) {
+    var m = message_mnemonic[k]
+    if (m == null) {
+        return 0
+    }
+    return m
+}
+
+reset()
+title(app_name)
+var s = screen()
+size(s[0] * 0.9, s[1] * 0.9)
+show()
+
+var frame_info = frame()
+var ctx = {
+    "name": app_name,
+
+    "dialog_width": 400,
+    "dialog_height": 240,
+    "dialog_width_2": frame_info[0] * 0.8,
+    "dialog_height_2": frame_info[1] * 0.8,    
+
+    "progress": null,
+    "tab": null
+}
+
+var app_menu = fn() { 
+    return [
+        [_("menu_file"), _m("menu_file"), 
+            [
+                [
+                    _("menu_quit"),
+                    _m("menu_quit"),
+                    true,
+                    fn() {
+                        frame_close()
+                    }
+                ]
+            ]
+        ],
+        [_("menu_help"), _m("menu_help"),
+            [ 
+                [
+                    _("menu_about"), 
+                    _m("menu_about"), 
+                    true, 
+                    fn() {
+                        var r = about_form()
+                    }
+                ]
+            ]
+        ]
+    ]
+}
+
+var init_ui = fn() {
+    closing(_("confirm_quit"), _("title_confirm"))
+
+    statusbar(0, ctx["name"], true)
+    timer(1000, fn() {
+        statusbar(2, string(@), true)
+    })
+
+    set(ctx, "progress", component("progress", ""))
+    config(ctx["progress"], "active", true)
+
+    menubar(app_menu())
+
+    var tab_main = component("tab", "")
+    set(ctx, "tab", tab_main)
+
+    tab_add(tab_main, dashboard_form())
+
+    add(tab_main)
+}
+
+var disable_tab = fn() {
+    config(ctx["tab"], "enabled", false)
+}
+
+var enable_tab = fn() {
+    config(ctx["tab"], "enabled", true)
+}
+
+var disable_components = fn(c) {
+    each(c, fn(e, i) {
+        config(e, "enabled", false)
+    })
+}
+
+var enable_components = fn(c) {
+    each(c, fn(e, i) {
+        config(e, "enabled", true)
+    })
+}
+
+var show_progress = fn(data) {
+    var td = data[1]
+    var tp = td + " " + _("ms")
+
+    config(ctx["progress"], "text", tp)
+    statusbar(7, ctx["progress"], true)
+}
+
+var show_progress_done = fn(data) {
+    statusbar(7, "", true)
+    enable_tab()
+}
+
+init_ui()
+
