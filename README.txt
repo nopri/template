@@ -30,7 +30,15 @@ web:
     (header/footer, link, query string)
     
     Please read how to configure web server
-    Apache HTTP Server: please enable .htaccess for data dir
+
+    Apache HTTP Server: 
+    - Please enable .htaccess for data dir
+    - Copy .htaccess file in this repo into data dir
+    Internet Information Services:
+    - Please copy web.config file in this repo to 
+      parent directory of data dir
+    - The web.config file contains requestFiltering
+      and hiddenSegments settings
 
 web-bootstrap4:
     Web: public, using Bootstrap 4
@@ -39,7 +47,15 @@ web-bootstrap4:
     Bundled with Bootstrap and jQuery in lib dir
 
     Please read how to configure web server
-    Apache HTTP Server: please enable .htaccess for data dir
+
+    Apache HTTP Server: 
+    - Please enable .htaccess for data dir
+    - Copy .htaccess file in this repo into data dir
+    Internet Information Services:
+    - Please copy web.config file in this repo to 
+      parent directory of data dir
+    - The web.config file contains requestFiltering
+      and hiddenSegments settings
 ------------------------------------------------------------
 
 How to configure web server (Windows, macOS, Linux):
