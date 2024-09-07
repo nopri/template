@@ -1,0 +1,21 @@
+#
+    session directory
+    set writable by web server user
+    example (Apache HTTP Server on Linux):
+    var s = "/var/www/html/session/"
+    enable .htaccess and add to .htaccess in session dir:
+        Require all denied
+
+    example (Internet Information Services):
+    var s = "c:/inetpub/wwwroot/session/"
+    copy web.config file to parent directory of session dir
+;
+var s = ""
+load_module("web")
+var sess = session_file_get(s)
+session_file_delete(s, sess)
+cgi_header(
+  header_session_delete(sess) +
+  header_location("login.web")
+)
+

@@ -1,0 +1,79 @@
+#
+    data directory
+    example (Apache HTTP Server on Linux):
+    var b = "/var/www/html/data/"
+    enable .htaccess and add to .htaccess in data dir:
+        Require all denied
+
+    example (Internet Information Services):
+    var b = "c:/inetpub/wwwroot/data/"
+    copy web.config file to parent directory of data dir
+
+    session directory
+    set writable by web server user
+    example (Apache HTTP Server on Linux):
+    var s = "/var/www/html/session/"
+    enable .htaccess and add to .htaccess in session dir:
+        Require all denied
+
+    example (Internet Information Services):
+    var s = "c:/inetpub/wwwroot/session/"
+    make sure web.config is in parent directory of session dir
+;
+var b = ""
+var s = ""
+var f = b + "template.web"
+var d = b + "data.login.html"
+
+load_module("web")
+var sess = session_file_get(s)
+if ((sess["user"] != null) & (sess["session"] != null)) {
+    cgi_header(
+        header_location("home.web")
+    )
+    exit()
+}
+
+if (request_method() == "GET") {
+    var g = cgi_get()
+    var error = ""
+    if (g["error"] == "auth") {
+        var error = "Authentication failed"
+    }
+
+    var t = "Login"
+    var p = "login.web"
+    var c = "login"
+
+    load(f)
+    cgi_header()
+    var h = header(t, p, c, sess)
+    println(h)
+    println(content(read(d), [
+        ["$ERROR", error]
+    ]))
+    var h = footer(p)
+    println(h)
+    exit()
+}
+
+if (request_method() == "POST") {
+    var form = cgi_post()
+    var u = form["u"]
+    var p = form["p"]
+    if (u == "admin" & p == "admin") {
+        var sess = session_new()
+        set(sess, "user", u)
+        session_file_set(s, sess)
+        cgi_header(
+            header_session(sess) +
+            header_location("home.web")
+        )
+    } else {
+        cgi_header(
+            header_location("login.web?error=auth")
+        )
+    }
+    exit()
+}
+

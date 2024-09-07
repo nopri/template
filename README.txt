@@ -40,6 +40,23 @@ web:
     - The web.config file contains requestFiltering
       and hiddenSegments settings
 
+web-login:
+    Web: public, HTML only, session
+    (header/footer, link, query string)
+    
+    Please read how to configure web server
+
+    session directory: set writable by web server user
+
+    Apache HTTP Server: 
+    - Please enable .htaccess for data and session dir
+    - Copy .htaccess file in this repo into data and session dir 
+    Internet Information Services:
+    - Please copy web.config file in this repo to 
+      parent directory of data (or session) dir
+    - The web.config file contains requestFiltering
+      and hiddenSegments settings
+
 web-bootstrap4:
     Web: public, using Bootstrap 4
     (header/footer, navbar, query string)

@@ -2,7 +2,10 @@ require(9.8)
 
 var resource = [
     ["index", "index.web", "Index", null],
-    ["post", "post.web", "Post", null]
+    ["post", "post.web", "Post", null],
+    ["login", "login.web", "Login", false],
+    ["home", "home.web", "Home", true],
+    ["logout", "logout.web", "Logout", true]
 ]
 
 var category = {
@@ -11,9 +14,25 @@ var category = {
     ]
 }
 
-var menu = fn(p, c) {
+var menu = fn(p, c, sess) {
     var ret = []
+    var resource_user = []
     each(resource, fn(e, i) {
+        if (e[3] == null) {
+            resource_user + e
+        } else {
+            if (empty(sess)) {
+                if (e[3] == false) {
+                    resource_user + e
+                }
+            } else {
+                if (e[3] == true) {
+                    resource_user + e
+                }
+            }
+        }
+    })
+    each(resource_user, fn(e, i) {
         var x = ""
         if (e[1] == p | e[0] == c) {
             var x = " style='font-weight: bold;'"
@@ -27,7 +46,7 @@ var menu = fn(p, c) {
     return join(newline(), ret)
 }
 
-var header = fn(t, p, c) {
+var header = fn(t, p, c, sess) {
     return "<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -38,7 +57,7 @@ var header = fn(t, p, c) {
 <body>
     NAME
     <hr>
-" + menu(p, c) + "
+" + menu(p, c, sess) + "
     <hr>
 "
 }
