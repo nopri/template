@@ -12,9 +12,9 @@ var b = ""
 var f = b + "template.web"
 var d = b + "data.index.html"
 
-var t = "Home"
+var t = "Index"
 var p = "index.web"
-var c = "home"
+var c = "index"
 
 load(f)
 cgi_header()

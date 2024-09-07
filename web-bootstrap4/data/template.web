@@ -1,8 +1,8 @@
 require(9.8)
 
 var resource = [
-    ["home", "index.web", "Home"],
-    ["post", "post.web", "Post"]
+    ["index", "index.web", "Index", false],
+    ["post", "post.web", "Post", false]
 ]
 
 var category = {
