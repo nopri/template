@@ -7,7 +7,7 @@
     Started by: Noprianto <nop@noprianto.com>
 ;
 
-require(9.8)
+require(9.9)
 load_module("ui_util")
 
 load_file_or_resource("system.singkong")

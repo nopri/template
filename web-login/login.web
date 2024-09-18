@@ -20,6 +20,8 @@
     var s = "c:/inetpub/wwwroot/session/"
     make sure web.config is in parent directory of session dir
 ;
+load_module("util")
+
 var b = ""
 var s = ""
 var f = b + "template.web"
@@ -49,9 +51,9 @@ if (request_method() == "GET") {
     cgi_header()
     var h = header(t, p, c, sess)
     println(h)
-    println(content(read(d), [
-        ["$ERROR", error]
-    ]))
+    println(replace_hash(read(d), {
+        "$ERROR": error
+    }))
     var h = footer(p)
     println(h)
     exit()

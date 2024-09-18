@@ -1,4 +1,4 @@
-require(9.8)
+require(9.9)
 
 var resource = [
     ["index", "index.web", "Index", null],
@@ -74,19 +74,6 @@ var header = fn(t, p, c) {
     </nav>
     <div class='container'>
 "
-}
-
-var content = fn(c, r) {
-    var ret = [c]
-    if (is(r, "ARRAY")) {
-        if (!empty(r)) {
-            each(r, fn(e, i) {
-                set(ret, 0, replace(ret[0], e[0], e[1]))
-            })
-            return ret[0]
-        }
-    }
-    return ret[0]
 }
 
 var content_list = fn(a, p) {

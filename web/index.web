@@ -9,6 +9,8 @@
     var b = "c:/inetpub/wwwroot/data/"
     copy web.config file to parent directory of data dir
 ;
+load_module("util")
+
 var b = ""
 var f = b + "template.web"
 var d = b + "data.index.html"
@@ -21,9 +23,9 @@ load(f)
 cgi_header()
 var h = header(t, p, c)
 println(h)
-println(content(read(d), [
-    ["$HELLO", "Hello, World"]
-]))
+println(replace_hash(read(d), {
+    "$HELLO": "Hello, World"
+}))
 var h = footer(p)
 println(h)
 

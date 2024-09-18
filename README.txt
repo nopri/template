@@ -46,7 +46,9 @@ web-login:
     
     Please read how to configure web server
 
-    session directory: set writable by web server user
+    session directory: 
+    - create in the same directory as *.web files
+    - set writable by web server user
 
     Apache HTTP Server: 
     - Please enable .htaccess for data and session dir

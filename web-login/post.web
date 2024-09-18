@@ -20,6 +20,8 @@
     var s = "c:/inetpub/wwwroot/session/"
     make sure web.config is in parent directory of session dir
 ;
+load_module("util")
+
 var b = ""
 var s = ""
 var f = b + "template.web"
@@ -47,17 +49,17 @@ var g = cgi_get()
 var gid = g["id"]
 if (in(keys(data), gid)) {
     var n = data[gid] 
-    println(content(read(d), [
-        ["$POST_ITEM", ""],
-        ["$POST_TITLE", content_title(n[0])],
-        ["$POST_CONTENTS", n[1]]
-    ]))
+    println(replace_hash(read(d), {
+        "$POST_ITEM": "",
+        "$POST_TITLE": content_title(n[0]),
+        "$POST_CONTENTS": n[1]
+    }))
 } else {
-    println(content(read(d), [
-        ["$POST_ITEM", content_list(data, p)],
-        ["$POST_TITLE", ""],
-        ["$POST_CONTENTS", ""]
-    ]))
+    println(replace_hash(read(d), {
+        "$POST_ITEM": content_list(data, p),
+        "$POST_TITLE": "",
+        "$POST_CONTENTS": ""
+    }))
 }
 var h = footer(p)
 println(h)
