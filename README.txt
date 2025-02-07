@@ -75,6 +75,27 @@ web-bootstrap4:
       parent directory of data dir
     - The web.config file contains requestFiltering
       and hiddenSegments settings
+
+web-bootstrap4-login:
+    Web: public, using Bootstrap 4, session
+    (header/footer, navbar, query string)
+    Navbar based on Navbar fixed example
+    Bundled with Bootstrap and jQuery in lib dir
+    
+    Please read how to configure web server
+
+    session directory: 
+    - create in the same directory as *.web files
+    - set writable by web server user
+
+    Apache HTTP Server: 
+    - Please enable .htaccess for data and session dir
+    - Copy .htaccess file in this repo into data and session dir 
+    Internet Information Services:
+    - Please copy web.config file in this repo to 
+      parent directory of data (or session) dir
+    - The web.config file contains requestFiltering
+      and hiddenSegments settings
 ------------------------------------------------------------
 
 How to configure web server (Windows, macOS, Linux):
