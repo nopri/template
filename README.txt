@@ -96,6 +96,28 @@ web-bootstrap4-login:
       parent directory of data (or session) dir
     - The web.config file contains requestFiltering
       and hiddenSegments settings
+
+web-mdbootstrap5-admin:
+    Web: admin, using MDB 5 UI Kit, session
+    (header/footer, navbar, sidebar, query string)
+    Based on free admin dashboard template 
+    Bundled with MDB 5 UI Kit and jQuery in lib dir
+    Bundled with Font Awesome 6 (Free)
+    
+    Please read how to configure web server
+
+    session directory: 
+    - create in the same directory as *.web files
+    - set writable by web server user
+
+    Apache HTTP Server: 
+    - Please enable .htaccess for data and session dir
+    - Copy .htaccess file in this repo into data and session dir 
+    Internet Information Services:
+    - Please copy web.config file in this repo to 
+      parent directory of data (or session) dir
+    - The web.config file contains requestFiltering
+      and hiddenSegments settings
 ------------------------------------------------------------
 
 How to configure web server (Windows, macOS, Linux):

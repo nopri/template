@@ -1,0 +1,144 @@
+require(9.9)
+
+var resource = [
+    ["home", "home.web", "Home", true, 
+        "fas fa-house fa-fw me-3", ""
+    ],
+    ["settings", "settings.web", "Settings", true, 
+        "fas fa-gear fa-fw me-3", ""
+    ],
+    ["login", "login.web", "Login", false, 
+        "fas fa-user-lock fa-fw me-3", ""
+    ]
+]
+
+var resource_account = [
+    ["settings", "settings.web", "Settings"], 
+    ["logout", "logout.web", "Logout"] 
+]
+
+var menu = fn(p, c, sess) {
+    var ret = []
+    var resource_user = []
+    each(resource, fn(e, i) {
+        if (e[3] == null) {
+            resource_user + e
+        } else {
+            if (empty(sess)) {
+                if (e[3] == false) {
+                    resource_user + e
+                }
+            } else {
+                if (e[3] == true) {
+                    resource_user + e
+                }
+            }
+        }
+    })
+    ret + "
+        <nav id='sidebarMenu' class='collapse d-lg-block sidebar collapse bg-white'>
+            <div class='position-sticky'>
+                <div class='list-group list-group-flush mx-3 mt-4'> 
+    "
+    each(resource_user, fn(e, i) {
+        var x = ""
+        if (e[1] == p | e[0] == c) {
+            var x = " active"
+        }
+        var m = " 
+            <a class='list-group-item list-group-item-action py-2" + x + 
+            "' href='" + e[1] + "' data-mdb-ripple-init>" + 
+                "<i class='" + e[4] + "'></i><span>" + e[2] 
+            + "</span></a>"
+        ret + m
+    })
+    ret + "
+                </div>
+            </div>
+        </nav>
+    "
+    return join(newline(), ret)
+}
+
+var menu_account = fn(sess) {
+    if (empty(sess)) {
+        return ""
+    }
+    var ret = []
+    ret + ("
+            <ul class='navbar-nav ms-auto d-flex flex-row'>
+                <li class='nav-item dropdown'>
+                    <a class='nav-link 
+                        me-3 me-lg-0 
+                        dropdown-toggle hidden-arrow' 
+                        href='#' 
+                        id='navbarDropdownMenuLink' 
+                        role='button' 
+                        data-mdb-dropdown-init 
+                        aria-expanded='false'>
+                            <i class='fas fa-user'></i>
+                    </a>
+                    <ul class='dropdown-menu 
+                        dropdown-menu-end' 
+                        aria-labelledby='navbarDropdownMenuLink'>
+    ")
+    each(resource_account, fn(e, i) {
+        ret + "<li>"
+        ret + ("<a class='dropdown-item' href='" + e[1] + "'>" + e[2] + "</a>")
+        ret + "</li>"
+    })
+    ret + ("
+                    </ul>
+                </li>
+            </ul>
+    ")
+    return join(newline(), ret)
+}
+
+var header = fn(t, p, c, sess) {
+    return "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta http-equiv='x-ua-compatible' content='ie=edge'>
+    <link rel='stylesheet' href='lib/css/all.min.css'>
+    <link rel='stylesheet' href='lib/css/mdb.min.css'>
+    <link rel='stylesheet' href='lib/style.css'>
+    <title>" + t + "</title>
+</head>
+<body>
+<header>
+" + menu(p, c, sess) + "
+    <nav id='main-navbar' class='navbar navbar-expand-lg navbar-light bg-white fixed-top'>
+        <div class='container-fluid'>
+            <button class='navbar-toggler' 
+                type='button' 
+                data-mdb-collapse-init 
+                data-mdb-target='#sidebarMenu' 
+                aria-controls='sidebarMenu' 
+                aria-expanded='false' 
+                aria-label='Toggle navigation'>
+                    <i class='fas fa-bars'></i>
+            </button>
+            <a class='navbar-brand' href='#'>
+                NAME
+            </a>"
+            + menu_account(sess) + "
+        </div>
+    </nav>
+</header>
+<main style='margin-top: 58px'>
+"
+}
+
+var footer = fn(p) {
+    return "
+    </main>
+    <script src='lib/js/jquery-3.7.1.min.js'></script>
+    <script src='lib/js/mdb.umd.min.js'></script>
+</body>
+</html>
+"
+}
+
