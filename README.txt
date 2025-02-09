@@ -101,8 +101,13 @@ web-mdbootstrap5-admin:
     Web: admin, using MDB 5 UI Kit, session
     (header/footer, navbar, sidebar, query string)
     Based on free admin dashboard template 
-    Bundled with MDB 5 UI Kit and jQuery in lib dir
-    Bundled with Font Awesome 6 (Free)
+    Bundled (in lib dir): 
+    - jQuery
+    - DataTables
+    - Apache ECharts
+    - MDB 5 UI Kit
+    - bootstrap-datepicker
+    - Font Awesome 6 (Free)
     
     Please read how to configure web server
 
