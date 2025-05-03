@@ -1,0 +1,6 @@
+AddHandler SingkongWeb .web
+Action SingkongWeb "/cgi-bin/singkongweb.cgi"
+DirectoryIndex index.web
+<Files "web.config">
+    Require all denied
+</Files>
