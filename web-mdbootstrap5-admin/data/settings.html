@@ -1,0 +1,14 @@
+<div class="container pt-4">
+    $v["user"]$
+    <hr>
+    Date: <input type='text' id='d' readonly>
+</div>
+<script type='text/javascript'>
+    var q = $.noConflict();
+    q(document).ready(function() {
+        q('#d').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+    });
+</script>

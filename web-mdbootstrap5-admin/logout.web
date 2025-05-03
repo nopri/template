@@ -1,0 +1,9 @@
+var s = runtime_command()["dir"] + "/session/"
+load_module("web")
+var sess = session_file_get(s)
+session_file_delete(s, sess)
+cgi_header(
+  header_session_delete(sess) +
+  header_location("login.web")
+)
+

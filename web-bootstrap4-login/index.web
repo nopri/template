@@ -1,0 +1,21 @@
+var b = runtime_command()["dir"] + "/data/"
+var s = runtime_command()["dir"] + "/session/"
+var f = b + "template.web"
+var d = b + "index.html"
+
+load_module("web")
+var sess = session_file_get(s)
+
+var t = "Index"
+var p = "index.web"
+var c = "index"
+
+var v = {"hello": "Hello, World"}
+load(f)
+cgi_header()
+var h = header(t, p, c, sess)
+println(h)
+println(template(read(d)))
+var h = footer(p)
+println(h)
+

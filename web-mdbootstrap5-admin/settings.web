@@ -1,0 +1,27 @@
+var b = runtime_command()["dir"] + "/data/"
+var s = runtime_command()["dir"] + "/session/"
+var f = b + "template.web"
+var d = b + "settings.html"
+
+load_module("web")
+var sess = session_file_get(s)
+if ((sess["user"] == null) | (sess["session"] == null)) {
+    cgi_header(
+        header_location("login.web")
+    )
+    exit()
+}
+
+var t = "Settings"
+var p = "settings.web"
+var c = "settings"
+
+var v = {"user": sess["user"]}
+load(f)
+cgi_header()
+var h = header(t, p, c, sess)
+println(h)
+println(template(read(d)))
+var h = footer(p)
+println(h)
+

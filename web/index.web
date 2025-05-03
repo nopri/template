@@ -1,0 +1,17 @@
+var b = runtime_command()["dir"] + "/data/"
+var f = b + "template.web"
+var d = b + "index.html"
+
+var t = "Index"
+var p = "index.web"
+var c = "index"
+
+var v = {"hello": "Hello, World"}
+load(f)
+cgi_header()
+var h = header(t, p, c)
+println(h)
+println(template(read(d)))
+var h = footer(p)
+println(h)
+

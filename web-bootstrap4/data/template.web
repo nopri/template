@@ -1,0 +1,107 @@
+var resource = [
+    ["index", "index.web", "Index", null],
+    ["post", "post.web", "Post", null]
+]
+
+var menu = fn(p, c) {
+    var ret = []
+    ret + "
+        <ul class='navbar-nav mr-auto'>
+    "
+    each(resource, fn(e, i) {
+        var x = ""
+        if (e[1] == p | e[0] == c) {
+            var x = " active"
+        }
+        var m = " 
+        <li class='nav-item" + x + "'>
+            <a class='nav-link' href='" + e[1] + "'>" + e[2] + "</a>
+        </li>"
+        ret + m
+    })
+    ret + "
+        </ul>
+    "
+    return join(newline(), ret)
+}
+
+var header = fn(t, p, c) {
+    return "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <link rel='stylesheet' href='lib/css/bootstrap.min.css'>
+    <style>
+        body {
+            min-height: 75rem;
+            padding-top: 5rem;
+        }
+
+        .navbar-dark .nav-item .nav-link {
+            color: #ffffff;
+        }
+        
+        .navbar-nav > .active > a {
+            text-decoration: underline;
+        }
+
+        .custom {
+            background-color: #000000 !important;
+        }
+    </style>
+    <title>" + t + "</title>
+</head>
+<body>
+    <nav class='navbar navbar-expand-md fixed-top navbar-dark bg-dark custom'>
+        <a class='navbar-brand' href='index.web'>NAME</a>
+        <button class='navbar-toggler'
+            type='button' data-toggle='collapse' 
+            data-target='#navbarCollapse'> 
+            <span class='navbar-toggler-icon'></span>
+        </button>
+        <div class='collapse navbar-collapse' id='navbarCollapse'>
+" + menu(p, c) + "
+        </div>
+    </nav>
+    <div class='container'>
+"
+}
+
+var content_list = fn(a, p) {
+    var ret = []
+    if (is(a, "HASH")) {
+        ret + "<ul>"
+        each(keys(a), fn(e, i) {
+            var v = a[e]
+            var n = "<li>
+                <a href='" + 
+                    p + "?id=" + e + "'>" + 
+                    v[0] + 
+                "</a>
+            </li>"
+            ret + n
+        })
+        ret + "</ul>"
+    }
+    return join(newline(), ret)
+}
+
+var content_title = fn(t) {
+    var t = trim(string(t))
+    if (!empty(t)) {
+        return "<h1>" + t + "</h1>"
+    }
+    return ""
+}
+
+var footer = fn(p) {
+    return "
+    </div>
+    <script src='lib/js/jquery-3.7.1.min.js'></script>
+    <script src='lib/js/bootstrap.bundle.min.js'></script>
+</body>
+</html>
+"
+}
+

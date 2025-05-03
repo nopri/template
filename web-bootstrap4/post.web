@@ -1,0 +1,36 @@
+var b = runtime_command()["dir"] + "/data/"
+var f = b + "template.web"
+var d = b + "post.html"
+
+var t = "Post"
+var p = "post.web"
+var c = "post"
+
+var data = {
+    "a": ["Post A", "Contents of Post A"],
+    "b": ["Post B", "Contents of Post B"],
+    "c": ["Post C", "Contents of Post C"]
+}
+
+load(f)
+cgi_header()
+var h = header(t, p, c)
+println(h)
+
+var v = {}
+var g = cgi_get()
+var gid = g["id"]
+if (in(keys(data), gid)) {
+    var n = data[gid]
+    set(v, "item", "")
+    set(v, "title", content_title(n[0]))
+    set(v, "contents", n[1])    
+} else {
+    set(v, "item", content_list(data, p))
+    set(v, "title", "")
+    set(v, "contents", "")
+}
+print(template(read(d)))
+var h = footer(p)
+println(h)
+
