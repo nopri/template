@@ -147,9 +147,6 @@ macOS
 	AddHandler SingkongWeb .web
 	Action SingkongWeb "/cgi-bin/singkongweb.cgi"
 
-- Restart Apache HTTP Server:
-  apachectl restart
-
 - Create singkongweb.cgi file: 
   /Library/WebServer/CGI-Executables/singkongweb.cgi 
 
@@ -168,6 +165,9 @@ macOS
 
 - Download Singkong.jar and save to /opt
   curl https://nopri.github.io/Singkong.jar -o /opt/Singkong.jar
+
+- Restart Apache HTTP Server:
+  apachectl restart
 
 - Where to save *.web files: /Library/WebServer/Documents/
 
@@ -199,9 +199,6 @@ Ubuntu Linux
             </Directory>
     </VirtualHost>
 
-- Restart Apache HTTP Server:
-  systemctl restart httpd
-
 - Create singkongweb.cgi file: 
   /usr/lib/cgi-bin/singkongweb.cgi
 
@@ -221,8 +218,13 @@ Ubuntu Linux
 - Download Singkong.jar and save to /opt
   wget https://nopri.github.io/Singkong.jar -O /opt/Singkong.jar
 
+- Restart Apache HTTP Server:
+  systemctl restart httpd
+
 - Where to save *.web files: /var/www/html/
 
+- session directory permission example:
+  chown -R www-data session
 
 ------------------------------------------------------------
 Alma Linux and Rocky Linux
@@ -245,9 +247,6 @@ Alma Linux and Rocky Linux
             </Directory>
     </VirtualHost>
 
-- Restart Apache HTTP Server:
-  systemctl restart httpd
-
 - Create singkongweb.cgi file: 
   /var/www/cgi-bin/singkongweb.cgi
 
@@ -267,7 +266,13 @@ Alma Linux and Rocky Linux
 - Download Singkong.jar and save to /opt
   curl https://nopri.github.io/Singkong.jar -o /opt/Singkong.jar
 
+- Restart Apache HTTP Server:
+  systemctl restart httpd
+
 - Where to save *.web files: /var/www/html/
+
+- session directory permission example:
+  chown -R apache session
 
 ------------------------------------------------------------
 cPanel/Apache
