@@ -78,7 +78,8 @@ web-mdbootstrap5-admin:
 
 ------------------------------------------------------------
 
-How to configure web server (Windows, macOS, Linux):
+How to configure web server 
+(Windows, macOS, Linux, cPanel/Apache, DirectAdmin/Apache):
 
 Windows 
 * Tested on Windows 10 and 11
@@ -113,9 +114,9 @@ Session directory:
 web.config file:
 - contains requestFiltering and hiddenSegments settings
 
+------------------------------------------------------------
 macOS
 * Using Apache HTTP Server
-* Please enable .htaccess
 * Tested on macOS 11
 * System administration privileges (using sudo) required
 * Commands are run in: Terminal
@@ -171,9 +172,9 @@ macOS
 - Where to save *.web files: /Library/WebServer/Documents/
 
 
+------------------------------------------------------------
 Ubuntu Linux
 * Using Apache HTTP Server
-* Please enable .htaccess
 * Tested on Ubuntu 22.04
 * System administration privileges (using sudo) required
 * Commands are run in terminal emulator
@@ -185,14 +186,18 @@ Ubuntu Linux
 - Enable Apache HTTP Server modules: actions cgi
   a2enmod actions cgi
   
-- Create configuration file: 
-  /etc/apache2/conf-available/singkongweb.conf
-
-	AddHandler SingkongWeb .web
-	Action SingkongWeb "/cgi-bin/singkongweb.cgi"
-
 - Enable Apache HTTP Server configuration:
-  a2enconf singkongweb serve-cgi-bin
+  a2enconf serve-cgi-bin
+
+- Virtual host configuration:
+  (example: /etc/apache2/sites-enabled/000-default.conf) 
+
+    <VirtualHost *:80>
+            DocumentRoot /var/www/html
+            <Directory /var/www/html>
+                    AllowOverride All
+            </Directory>
+    </VirtualHost>
 
 - Restart Apache HTTP Server:
   systemctl restart httpd
@@ -219,9 +224,9 @@ Ubuntu Linux
 - Where to save *.web files: /var/www/html/
 
 
+------------------------------------------------------------
 Alma Linux and Rocky Linux
 * Using Apache HTTP Server
-* Please enable .htaccess
 * Tested using version 8
 * System administration privileges (using sudo) required
 * SELinux is disabled (SELINUX=disabled in file /etc/selinux/config)
@@ -230,11 +235,15 @@ Alma Linux and Rocky Linux
 - Install packages:
   dnf install httpd java-1.8.0-openjdk
 
-- Create configuration file: 
-  /etc/httpd/conf.d/singkongweb.conf
+- Virtual host configuration:
+  (example: /etc/httpd/conf.d/default.conf)
 
-	AddHandler SingkongWeb .web
-	Action SingkongWeb "/cgi-bin/singkongweb.cgi"
+    <VirtualHost *:80>
+            DocumentRoot /var/www/html
+            <Directory /var/www/html>
+                    AllowOverride All
+            </Directory>
+    </VirtualHost>
 
 - Restart Apache HTTP Server:
   systemctl restart httpd
@@ -259,4 +268,66 @@ Alma Linux and Rocky Linux
   curl https://nopri.github.io/Singkong.jar -o /opt/Singkong.jar
 
 - Where to save *.web files: /var/www/html/
+
+------------------------------------------------------------
+cPanel/Apache
+* As regular user without system administration privileges
+* Install Java runtime in home directory,
+  if Java runtime is not installed
+* Download https://nopri.github.io/Singkong.jar,
+  save to home directory
+
+- Create singkongweb.cgi file,
+  (in public_html/cgi-bin/ in home directory)
+  (please replace <java> and <singkong> with
+  respective path to Java and Singkong)
+
+	#!/bin/bash
+
+	if [ -z "$PATH_TRANSLATED" ];
+	then
+		printf "Status: 404 Not Found\n"
+		printf "Content-type: text/plain\n\n"
+		printf "not found\n"
+	else
+		<java> -DSINGKONG=0 -jar <singkong> "$PATH_TRANSLATED"
+	fi
+
+- chmod: chmod +x singkongweb.cgi
+  (or right click singkongweb.cgi in File Manager,
+  Change Permissions, Execute)
+
+- Where to save *.web files: public_html in home directory
+
+
+------------------------------------------------------------
+DirectAdmin/Apache
+* As regular user without system administration privileges
+* Install Java runtime in home directory,
+  if Java runtime is not installed
+* Download https://nopri.github.io/Singkong.jar,
+  save to home directory
+
+- Create singkongweb.cgi file,
+  (in public_html/cgi-bin/ in home directory)
+  (please replace <java> and <singkong> with
+  respective path to Java and Singkong)
+
+	#!/bin/bash
+
+	if [ -z "$PATH_TRANSLATED" ];
+	then
+		printf "Status: 404 Not Found\n"
+		printf "Content-type: text/plain\n\n"
+		printf "not found\n"
+	else
+		<java> -DSINGKONG=0 -jar <singkong> "$PATH_TRANSLATED"
+	fi
+
+- chmod: chmod +x singkongweb.cgi
+  (or right click singkongweb.cgi in File Manager,
+  Set Permissions, Execute)
+
+- Where to save *.web files: public_html in home directory
+
 
