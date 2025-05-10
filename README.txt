@@ -219,12 +219,16 @@ Ubuntu Linux
   wget https://nopri.github.io/Singkong.jar -O /opt/Singkong.jar
 
 - Restart Apache HTTP Server:
-  systemctl restart httpd
+  systemctl restart apache2
 
 - Where to save *.web files: /var/www/html/
 
 - session directory permission example:
   chown -R www-data session
+  or
+  chgrp -R www-data session
+  chmod -R g+w session
+
 
 ------------------------------------------------------------
 Alma Linux and Rocky Linux
@@ -273,6 +277,10 @@ Alma Linux and Rocky Linux
 
 - session directory permission example:
   chown -R apache session
+  or
+  chgrp -R apache session
+  chmod -R g+w session
+
 
 ------------------------------------------------------------
 cPanel/Apache
