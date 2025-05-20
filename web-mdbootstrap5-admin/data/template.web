@@ -114,11 +114,13 @@ var header = fn(t, p, c, sess) {
     <link rel='stylesheet' href='lib/css/all.min.css'>
     <link rel='stylesheet' href='lib/css/mdb.min.css'>
     <link rel='stylesheet' href='lib/css/dataTables.dataTables.min.css'>
+    <link rel='stylesheet' href='lib/css/select.dataTables.min.css'>
     <link rel='stylesheet' href='lib/css/bootstrap-datepicker.standalone.min.css'>
     <link rel='stylesheet' href='lib/style.css'>
     <script src='lib/js/jquery-3.7.1.min.js'></script>
     <script src='lib/js/echarts.min.js'></script>
     <script src='lib/js/dataTables.min.js'></script>
+    <script src='lib/js/dataTables.select.min.js'></script>
     <script src='lib/js/bootstrap-datepicker.min.js'></script>
     <title>" + t + "</title>
 </head>

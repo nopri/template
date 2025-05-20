@@ -64,20 +64,24 @@
           <table id='table' class='display cell-border'>
             <thead>
               <tr>
+                <th></th>
                 <th>Application</th>
                 <th>Download</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td>A</td>
                 <td>40</td>
               </tr>
               <tr>
+                <td>2</td>
                 <td>B</td>
                 <td>50</td>
               </tr>
               <tr>
+                <td>3</td>
                 <td>C</td>
                 <td>60</td>
               </tr>
@@ -96,7 +100,19 @@
     var q = $.noConflict();
     q(document).ready(function() {
         q('#table').DataTable({
-          'scrollX': true
+            scrollX: true,
+            order: [[1, 'asc']],
+            columnDefs: [
+                {
+                    targets: 0,
+                    orderable: false,
+                    render: DataTable.render.select()
+                }
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            }
         });
 
         var c = echarts.init(document.getElementById('chart'));
