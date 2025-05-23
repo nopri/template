@@ -109,6 +109,45 @@
                     render: DataTable.render.select()
                 }
             ],
+            layout: {
+                top: {
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            text: 'copy',
+                            className: 'btn btn-sm btn-primary',
+                            init: function (api, node, config) {
+                                q(node).removeClass('dt-button');
+                            },
+                        },
+                        {
+                            extend: 'print',
+                            text: 'print',
+                            className: 'btn btn-sm btn-primary',
+                            init: function (api, node, config) {
+                                q(node).removeClass('dt-button');
+                            },
+                        },
+                        {
+                            text: 'custom',
+                            className: 'btn btn-sm btn-primary',
+                            init: function (api, node, config) {
+                                q(node).removeClass('dt-button');
+                            },
+                            action: function (e, dt, node, config) {
+                                var r = dt.rows({selected: true}).data();
+                                if (r.length == 0) {
+                                    alert('No rows selected');
+                                } else {
+                                    for (var i=0; i<r.length; i++) {
+                                        alert(JSON.stringify(r[i]));
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
             select: {
                 style: 'multi',
                 selector: 'td:first-child'
