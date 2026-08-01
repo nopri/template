@@ -1,0 +1,313 @@
+var app_name = "NAME"
+
+var res_home = fn(p, c, sess) {
+    return ["Home", "bg-danger", random(5, 50)]
+}
+
+var res_admin = fn(p, c, sess) {
+    return ["Admin", "bg-success", "Pro"]
+}
+
+var res_login = fn(p, c, sess) {
+    return ["Login", "", 0]
+}
+
+var res_admin_settings = fn(p, c, sess, t) {
+    return ["Settings", "bg-primary", random(5, 50)]
+}
+
+var res_example = fn(p, c, sess) {
+    return ["Example", "", ""]
+}
+
+var res_example_test = fn(p, c, sess, t) {
+    return ["Test", "", ""]
+}
+
+var resource = [
+    ["home", "home.web", res_home, true, 
+        "bi bi-house me-2", "", [
+        ], false
+    ],
+    ["admin", "#", res_admin, true, 
+        "bi bi-gear me-2", "", [
+            ["settings.web", res_admin_settings, 
+                "bi bi-calendar-event"] 
+        ], true
+    ],
+    ["example", "#", res_example, true, 
+        "bi bi-file me-2", "", [
+            ["#", res_example_test, ""] 
+            
+        ], false
+    ],
+    ["login", "login.web", res_login, false, 
+        "bi bi-door-open me-2", "", [
+        ], false
+    ]
+]
+
+var resource_account = [
+    ["settings", "settings.web", "Settings", 
+        "bi bi-person-square", "text-body"], 
+    [],
+    ["logout", "logout.web", "Logout", 
+        "bi bi-door-closed", "text-danger"] 
+]
+
+var menu = fn(p, c, sess) {
+    var ret = []
+    var resource_user = []
+    each(resource, fn(e, i) {
+        if (is(e[2], "FUNCTION")) {
+            set(e, 2, e[2](p, c, sess))
+        }
+        if (e[3] == null) {
+            resource_user + e
+        } else {
+            if (empty(sess)) {
+                if (e[3] == false) {
+                    resource_user + e
+                }
+            } else {
+                if (e[3] == true) {
+                    resource_user + e
+                }
+            }
+        }
+    })
+    ret + "
+            <div class='sidebar-wrapper'>
+                <nav class='mt-2'>
+                    <ul class='
+                            nav 
+                            sidebar-menu 
+                            flex-column' 
+                        data-lte-toggle='treeview' 
+                        role='menu' 
+                        data-accordion='false'>
+    "
+    each(resource_user, fn(e, i) {
+        var x = ""
+        if (e[1] == p | e[0] == c) {
+            var x = " active"
+        }
+
+        var f = e[2]
+        var t = "<p class='
+                        d-flex 
+                        justify-content-between 
+                        align-items-center 
+                        w-100'>" + f[0] 
+        var b = ""
+        if ((!empty(string(f[1]))) & 
+            (!empty(string(f[2])))) {
+            var b = ("<span class='
+                                ms-auto 
+                                me-3 
+                                nav-badge 
+                                badge " + f[1] + "'>" +
+                f[2] + "</span>")
+        }
+        var t = t + b 
+        var o = ""
+        var s = ""
+        if (!empty(e[6])) {
+            var t = t + "<i class='
+                                nav-arrow 
+                                bi 
+                                bi-chevron-right'></i>"
+            var o = ""
+            if (e[7] == true) {
+                var o = " menu-open"
+            }
+            var s = " bg-body-secondary"
+        }
+
+        var t = t + "</p>"
+
+        
+        ret + ("<li class='nav-item" + o + "'>")
+        var m = (" 
+            <a class='nav-link" + x + s +  
+            "' href='" + e[1] + "'>" + 
+                "<i class='nav-icon " + e[4] + "'></i>" + t  
+            + "</a>")
+        ret + m
+
+        if (!empty(e[6])) {
+            ret + "<ul class='nav nav-treeview'>"
+            each(e[6], fn(ee, ii) {
+                var ff = ee[1](p, c, sess, f)
+                var tt = "<p class='ms-2 
+                                d-flex 
+                                justify-content-between 
+                                align-items-center w-100'>" + 
+                                ff[0] 
+                var bb = ""
+                if ((!empty(string(ff[1]))) & 
+                    (!empty(string(ff[2])))) {
+                    var bb = ("<span class='
+                                        ms-auto 
+                                        me-3 
+                                        nav-badge 
+                                        badge " + 
+                                        ff[1] + "'>" +
+                        ff[2] + "</span>")
+                }
+                var tt = tt + bb 
+                var tt = tt + "</p>"
+                ret + "<li class='nav-item'>"
+                var mm = (" 
+                    <a class='nav-link" + x + 
+                    "' href='" + ee[0] + "'>" + 
+                        "<i class='nav-icon " + 
+                        ee[2] + "'></i>" + tt  
+                    + "</a>")
+                ret + mm
+                ret + "</li>"
+                
+            })
+            ret + "</ul>"
+        }
+        ret + "</li>"
+    })
+    ret + "
+                    </ul>
+                </nav>
+            </div>
+    "
+    return join(newline(), ret)
+}
+
+var menu_account = fn(sess) {
+    if (empty(sess)) {
+        return ""
+    }
+    var ret = []
+    ret + ("
+            <ul class='navbar-nav ms-auto'>
+                <li class='nav-item dropdown'>
+                    <a class='nav-link' 
+                        data-bs-toggle='dropdown' 
+                        href='#' role='button'>
+                        <i class='bi bi-person'>
+                        </i>
+                    </a>
+                    <ul class='dropdown-menu 
+                                dropdown-menu-end'>
+                        
+    ")
+    each(resource_account, fn(e, i) {
+        ret + "<li>"
+        if (empty(e)) {
+            ret + "<hr class='dropdown-divider'>"
+        } else {
+            ret + ("<a class='dropdown-item 
+                                d-flex 
+                                align-items-center " + 
+                                e[4] + "' href='" + 
+                                e[1] + "'>")
+            ret + ("<i class='me-2 " + e[3] + "'></i>")
+            ret + ("<span>" + e[2] + "</span>")
+            ret + "</a>"
+        }
+        ret + "</li>"
+    })
+    ret + ("
+                    </ul>
+                </li>
+            </ul>
+    ")
+    return join(newline(), ret)
+}
+
+var body_class = fn(sess) {
+    return "layout-fixed sidebar-expand-lg bg-body-tertiary"
+}
+
+var header = fn(t, p, c, sess) {
+    return "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, 
+        initial-scale=1'>
+    <link rel='stylesheet' 
+        href='lib/css/bootstrap-icons.min.css'>
+    <link rel='stylesheet' 
+        href='lib/css/adminlte.min.css'>
+    <link rel='stylesheet' 
+        href='lib/css/dataTables.dataTables.min.css'>
+    <link rel='stylesheet' 
+        href='lib/css/select.dataTables.min.css'>
+    <link rel='stylesheet' 
+        href='lib/css/buttons.dataTables.min.css'>
+    <link rel='stylesheet' 
+        href='lib/css/bootstrap-datepicker.standalone.min.css'>
+    <script src='lib/js/jquery-3.7.1.min.js'></script>
+    <title>" + t + "</title>
+</head>
+<body class='"+ body_class(sess)  +"'>
+    <div class='app-wrapper'>
+        <nav class='app-header navbar navbar-expand bg-body'>
+            <div class='container-fluid'>
+                <ul class='navbar-nav'>
+                    <li class='nav-item'>
+                        <a class='nav-link' 
+                            data-lte-toggle='sidebar' 
+                            href='#' role='button'>
+                            <i class='bi bi-list'></i>
+                        </a>
+                    </li>
+                    <li class='nav-item 
+                                d-flex align-items-center'>
+                        <span class='navbar-brand mb-0 h5'>" + 
+                        t + "</span>
+                    </li>
+                </ul>
+" + menu_account(sess) + "
+
+            </div>
+        </nav>
+
+        <aside class='app-sidebar bg-body-secondary shadow'>
+            <div class='sidebar-brand'>
+                <a href='#' class='brand-link'>
+                    <span class='brand-text'>" + app_name + "</span>
+                </a>
+            </div>
+
+            " + menu(p, c, sess) + "
+        </aside>
+        <main class='app-main'>
+            <div class='app-content-header'>
+                <div class='container-fluid'>
+                    <!--<h3 class='mb-0'></h3>-->
+                </div>
+            </div>
+            <div class='app-content'>
+                <div class='container-fluid'>
+"
+}
+
+var footer = fn(p) {
+    return "
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src='lib/js/bootstrap.bundle.min.js'></script>
+    <script src='lib/js/adminlte.min.js'></script>
+    <script src='lib/js/echarts.min.js'></script>
+    <script src='lib/js/dataTables.min.js'></script>
+    <script src='lib/js/dataTables.select.min.js'></script>
+    <script src='lib/js/dataTables.buttons.min.js'></script>
+    <script src='lib/js/buttons.html5.min.js'></script>
+    <script src='lib/js/buttons.print.min.js'></script>
+    <script src='lib/js/bootstrap-datepicker.min.js'></script>
+</body>
+</html>
+"
+}
+

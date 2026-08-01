@@ -76,6 +76,23 @@ web-mdbootstrap5-admin:
     session directory: 
     - set writable by web server user
 
+web-adminlte4-admin:
+    [The currently recommended Singkong web admin template]
+    Web: admin, using AdminLTE4, session
+    (header/footer, navbar, sidebar, query string)
+    Bundled (in lib dir): 
+    - jQuery
+    - DataTables
+    - Apache ECharts
+    - AdminLTE4
+    - bootstrap-datepicker
+    - Bootstrap Icons
+
+    Please read how to configure web server
+
+    session directory: 
+    - set writable by web server user
+
 ------------------------------------------------------------
 
 How to configure web server 
