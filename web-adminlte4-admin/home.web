@@ -18,7 +18,15 @@ var c = "home"
 
 load(f)
 cgi_header()
-var h = header(t, p, c, sess)
+var bc = [
+    ["index.web", "Application"],
+    ["home.web", "Home"]
+]
+var tb = [
+    ["#", "bi-download"],
+    ["#", "bi-question-circle"]
+]
+var h = header(t, p, c, sess, bc, tb)
 println(h)
 println(template(read(d)))
 var h = footer(p)

@@ -26,34 +26,38 @@ var res_example_test = fn(p, c, sess, t) {
 
 var resource = [
     ["home", "home.web", res_home, true, 
-        "bi bi-house me-2", "", [
+        "bi-house me-2", "", [
         ], false
     ],
     ["admin", "#", res_admin, true, 
-        "bi bi-gear me-2", "", [
+        "bi-gear me-2", "", [
             ["settings.web", res_admin_settings, 
-                "bi bi-calendar-event"] 
+                "bi-calendar-event"] 
         ], true
     ],
     ["example", "#", res_example, true, 
-        "bi bi-file me-2", "", [
+        "bi-file me-2", "", [
             ["#", res_example_test, ""] 
             
         ], false
     ],
     ["login", "login.web", res_login, false, 
-        "bi bi-door-open me-2", "", [
+        "bi-door-open me-2", "", [
         ], false
     ]
 ]
 
 var resource_account = [
     ["settings", "settings.web", "Settings", 
-        "bi bi-person-square", "text-body"], 
+        "bi-person-square", "text-body"], 
     [],
     ["logout", "logout.web", "Logout", 
-        "bi bi-door-closed", "text-danger"] 
+        "bi-door-closed", "text-danger"] 
 ]
+
+#
+Modifying the lines below is optional.
+;
 
 var menu = fn(p, c, sess) {
     var ret = []
@@ -131,7 +135,7 @@ var menu = fn(p, c, sess) {
         var m = (" 
             <a class='nav-link" + x + s +  
             "' href='" + e[1] + "'>" + 
-                "<i class='nav-icon " + e[4] + "'></i>" + t  
+                "<i class='nav-icon bi " + e[4] + "'></i>" + t  
             + "</a>")
         ret + m
 
@@ -161,7 +165,7 @@ var menu = fn(p, c, sess) {
                 var mm = (" 
                     <a class='nav-link" + x + 
                     "' href='" + ee[0] + "'>" + 
-                        "<i class='nav-icon " + 
+                        "<i class='nav-icon bi " + 
                         ee[2] + "'></i>" + tt  
                     + "</a>")
                 ret + mm
@@ -180,13 +184,30 @@ var menu = fn(p, c, sess) {
     return join(newline(), ret)
 }
 
-var menu_account = fn(sess) {
+var toolbar = fn(sess, tb) {
+    var ret = []
+    each(tb, fn(e, i) {
+        ret + ("
+        <li class='nav-item'>
+            <a class='nav-link px-2' href='" + e[0] + "'>
+                <i class='bi " + e[1] + "'></i>
+            </a>
+        </li>")
+    })
+    if (!empty(ret)) {
+        ret + "<li class='ms-3'></li>"
+    }
+    return join(newline(), ret)
+}
+
+var menu_account = fn(sess, tb) {
     if (empty(sess)) {
         return ""
     }
     var ret = []
     ret + ("
-            <ul class='navbar-nav ms-auto'>
+            <ul class='navbar-nav ms-auto'>" +
+                toolbar(sess, tb) + "
                 <li class='nav-item dropdown'>
                     <a class='nav-link' 
                         data-bs-toggle='dropdown' 
@@ -223,10 +244,42 @@ var menu_account = fn(sess) {
 }
 
 var body_class = fn(sess) {
-    return "layout-fixed sidebar-expand-lg bg-body-tertiary"
+    var ret = ["layout-fixed",
+        "fixed-header",
+        "sidebar-expand-lg",
+        "bg-body-tertiary"
+    ]
+    return join(" ", ret)
 }
 
-var header = fn(t, p, c, sess) {
+var breadcrumb = fn(p, c, sess, bc) {
+    if (empty(bc)) {
+        return ""
+    }
+
+    var ret = []
+    ret + "<div class='row'><div class='col-12'>"
+    ret + "<ol class='breadcrumb mb-0 text-sm'>"
+    each(bc, fn(e, i) {
+        var x = ""
+        var a = ""
+        if (e[0] == p | e[0] == c) {
+            var x = " active"
+            var a = e[1]
+        } else {
+            var a = "<a href='" + e[0] + "'>" + e[1] + "</a>"
+        }
+        ret + ("<li class='breadcrumb-item" + x + "'>")
+        ret + a
+        ret + "</li>"
+        
+    })
+    ret + "</ol>"
+    ret + "</div></div>"
+    return join(newline(), ret)
+}
+
+var header = fn(t, p, c, sess, bc, tb) {
     return "<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -266,7 +319,7 @@ var header = fn(t, p, c, sess) {
                         t + "</span>
                     </li>
                 </ul>
-" + menu_account(sess) + "
+" + menu_account(sess, tb) + "
 
             </div>
         </nav>
@@ -284,6 +337,7 @@ var header = fn(t, p, c, sess) {
             <div class='app-content-header'>
                 <div class='container-fluid'>
                     <!--<h3 class='mb-0'></h3>-->
+                    " + breadcrumb(p, c, sess, bc) + "
                 </div>
             </div>
             <div class='app-content'>
