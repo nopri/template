@@ -279,7 +279,38 @@ var breadcrumb = fn(p, c, sess, bc) {
     return join(newline(), ret)
 }
 
-var header = fn(t, p, c, sess, bc, tb) {
+var style_print = fn(paper, margin) {
+    return "
+        <style>
+            @page {
+                size: " + paper + ";
+                margin: " + margin + ";
+            } 
+            .skip-links {
+                display: none !important;
+            }
+            @media print {
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                .btn-primary, 
+                .dt-button, 
+                button.dt-button {
+                    background-color: #0d6efd !important;
+                    border-color: #0d6efd !important;
+                    color: #ffffff !important;
+                }
+                .card {
+                    border: 1px solid #dee2e6 !important; 
+                    box-shadow: none !important;
+                }
+            }
+        </style>
+    "
+}
+
+var header_ = fn(t, style) {
     return "<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -299,8 +330,12 @@ var header = fn(t, p, c, sess, bc, tb) {
     <link rel='stylesheet' 
         href='lib/css/bootstrap-datepicker.standalone.min.css'>
     <script src='lib/js/jquery-3.7.1.min.js'></script>
-    <title>" + t + "</title>
-</head>
+    <title>" + t + "</title>" + style + "
+</head>" 
+}
+
+var header = fn(t, p, c, sess, bc, tb) {
+    return header_(t, "") + "
 <body class='"+ body_class(sess)  +"'>
     <div class='app-wrapper'>
         <nav class='app-header navbar navbar-expand bg-body'>
@@ -333,6 +368,23 @@ var header = fn(t, p, c, sess, bc, tb) {
 
             " + menu(p, c, sess) + "
         </aside>
+        <main class='app-main'>
+            <div class='app-content-header'>
+                <div class='container-fluid'>
+                    <!--<h3 class='mb-0'></h3>-->
+                    " + breadcrumb(p, c, sess, bc) + "
+                </div>
+            </div>
+            <div class='app-content'>
+                <div class='container-fluid'>
+"
+}
+
+var header_print = fn(t, p, c, sess, bc, tb, paper, margin) {
+    var st = style_print(paper, margin)
+    return header_(t, st) + "
+<body class='"+ body_class(sess)  +"'>
+    <div class='app-wrapper'>
         <main class='app-main'>
             <div class='app-content-header'>
                 <div class='container-fluid'>
