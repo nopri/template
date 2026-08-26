@@ -26,6 +26,11 @@ var tb = [
     ["#", "bi-download"],
     ["#", "bi-question-circle"]
 ]
+var n = @ 
+var v = {
+    "text": n,
+    "qr": x_qrcode_data_base64(string(n))
+}
 var h = header(t, p, c, sess, bc, tb)
 println(h)
 println(template(read(d)))
