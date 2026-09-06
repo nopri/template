@@ -88,6 +88,7 @@ web-adminlte4-admin:
     - AdminLTE4
     - bootstrap-datepicker
     - Bootstrap Icons
+    - font: Adobe Source Sans 3
 
     Please read how to configure web server
 
