@@ -1,6 +1,6 @@
 var b = runtime_command()["dir"] + "/data/"
 var s = runtime_command()["dir"] + "/session/"
-var f = b + "template.web"
+var f = b + "template.singkong"
 var d = b + "settings.html"
 
 load_module("web")
