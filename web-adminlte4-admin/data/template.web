@@ -1,4 +1,4 @@
-var app_name = "NAME"
+load(runtime_command()["dir"] + "/data/system.singkong")
 
 var res_home = fn(p, c, sess) {
     return ["Home", "bg-danger", random(5, 50)]
