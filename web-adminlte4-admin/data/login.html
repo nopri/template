@@ -1,12 +1,14 @@
 <div>
     <div class='login-box'>
         <div class='login-logo'>
-            <h3>Logo</h3>
+            <h3>$app_name$</h3>
         </div>
         <div class='card'>
             <div class='card-body login-card-body rounded'>
-                <p class='login-box-msg text-danger'>$v["error"]$</p>
-                <form action='login.web' method='post'>
+                <p id='msg' class='login-box-msg text-danger'>
+                $v["error"]$
+                </p>
+                <form id='login' action='login.web' method='post'>
                     <div class='mb-4'>
                         <input type='text' id='u' name='u' class='form-control' placeholder='Username' autofocus>
                     </div>
@@ -19,3 +21,20 @@
         </div>
     </div>
 </div>
+<script>
+    var q = jQuery.noConflict();
+    q(document).ready(function() {
+        q('#login').on('submit', function(e) {
+            var u = q.trim(q('#u').val());
+            var p = q.trim(q('#p').val());
+
+            if ((u == '') || (p == '')) {
+                e.preventDefault();
+                q('#msg').text('Please enter your username and password');
+                q('#u').focus();
+            } else {
+                q('#msg').text('Please wait...');
+            }
+        });
+    });     
+</script>

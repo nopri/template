@@ -1,10 +1,11 @@
 var rt_dir = runtime_command()["dir"]
 var system_file = "system.singkong"
 if (!in(dir(rt_dir), system_file)) {
-    var system_path = rt_dir + "/data/" + system_file
+    var data_dir = "/data/"
 } else {
-    var system_path = rt_dir + "/" + system_file
+    var data_dir = "/"
 }
+var system_path = rt_dir + data_dir + system_file
 load(system_path)
 
 var res_home = fn(p, c, sess) {
@@ -250,11 +251,20 @@ var menu_account = fn(sess, tb) {
     return join(newline(), ret)
 }
 
-var body_class = fn(sess) {
-    var ret = ["layout-fixed",
+var body_class_base = fn(c) {
+    var ret = ["bg-body-tertiary"]
+    if (is_array_and_of(c, "STRING")) {
+        var ret = array_extend(ret, c)
+    }
+    return join(" ", ret)
+}
+
+var body_class = fn() {
+    var ret = [
+        body_class_base([]),
+        "layout-fixed",
         "fixed-header",
-        "sidebar-expand-lg",
-        "bg-body-tertiary"
+        "sidebar-expand-lg"
     ]
     return join(" ", ret)
 }
@@ -317,7 +327,7 @@ var style_print = fn(paper, margin) {
     "
 }
 
-var header_ = fn(t, style) {
+var header_base = fn(t) {
     return "<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -326,11 +336,17 @@ var header_ = fn(t, style) {
         initial-scale=1'>
     <link rel='icon' href='lib/favicon.ico'>
     <link rel='stylesheet' 
-        href='lib/style.css'>
+        href='lib/style.css?t=" + number(@) + "'>
     <link rel='stylesheet' 
         href='lib/css/bootstrap-icons.min.css'>
     <link rel='stylesheet' 
         href='lib/css/adminlte.min.css'>
+    <script src='lib/js/jquery-3.7.1.min.js'></script>
+    <title>" + t + "</title>"
+}
+
+var header_ = fn(t, style) {
+    return header_base(t) + "
     <link rel='stylesheet' 
         href='lib/css/dataTables.dataTables.min.css'>
     <link rel='stylesheet' 
@@ -339,14 +355,13 @@ var header_ = fn(t, style) {
         href='lib/css/buttons.dataTables.min.css'>
     <link rel='stylesheet' 
         href='lib/css/bootstrap-datepicker.standalone.min.css'>
-    <script src='lib/js/jquery-3.7.1.min.js'></script>
-    <title>" + t + "</title>" + style + "
+    " + style + "
 </head>" 
 }
 
 var header = fn(t, p, c, sess, bc, tb) {
     return header_(t, "") + "
-<body class='"+ body_class(sess)  +"'>
+<body class='"+ body_class()  +"'>
     <div class='app-wrapper'>
         <nav class='app-header navbar navbar-expand bg-body'>
             <div class='container-fluid'>
@@ -381,7 +396,6 @@ var header = fn(t, p, c, sess, bc, tb) {
         <main class='app-main'>
             <div class='app-content-header'>
                 <div class='container-fluid'>
-                    <!--<h3 class='mb-0'></h3>-->
                     " + breadcrumb(p, c, sess, bc) + "
                 </div>
             </div>
@@ -393,18 +407,33 @@ var header = fn(t, p, c, sess, bc, tb) {
 var header_print = fn(t, p, c, sess, bc, tb, paper, margin) {
     var st = style_print(paper, margin)
     return header_(t, st) + "
-<body class='"+ body_class(sess)  +"'>
+<body class='"+ body_class()  +"'>
     <div class='app-wrapper'>
         <main class='app-main'>
             <div class='app-content-header'>
                 <div class='container-fluid'>
-                    <!--<h3 class='mb-0'></h3>-->
                     " + breadcrumb(p, c, sess, bc) + "
                 </div>
             </div>
             <div class='app-content'>
                 <div class='container-fluid'>
 "
+}
+
+var header_min = fn(t, c) {
+    return header_base(t) + "
+</head>
+<body class='"+ body_class_base(c)  +"'>
+"
+}
+
+var footer_min = fn() {
+    return "
+    <script src='lib/js/bootstrap.bundle.min.js'></script>
+    <script src='lib/js/adminlte.min.js'></script>
+</body>
+</html>
+    "
 }
 
 var footer = fn(p) {
