@@ -1,4 +1,11 @@
-load(runtime_command()["dir"] + "/data/system.singkong")
+var rt_dir = runtime_command()["dir"]
+var system_file = "system.singkong"
+if (!in(dir(rt_dir), system_file)) {
+    var system_path = rt_dir + "/data/" + system_file
+} else {
+    var system_path = rt_dir + "/" + system_file
+}
+load(system_path)
 
 var res_home = fn(p, c, sess) {
     return ["Home", "bg-danger", random(5, 50)]
