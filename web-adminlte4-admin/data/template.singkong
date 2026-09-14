@@ -91,6 +91,10 @@ var menu = fn(p, c, sess) {
         if (!empty(e[6])) {
             ret + "<ul class='nav nav-treeview'>"
             each(e[6], fn(ee, ii) {
+                var xx = ""
+                if (p == ee[0]) {
+                    var xx = " active"
+                }
                 var ff = ee[1](p, c, sess, f)
                 var tt = "<p class='ms-2 
                                 d-flex 
@@ -112,7 +116,7 @@ var menu = fn(p, c, sess) {
                 var tt = tt + "</p>"
                 ret + "<li class='nav-item'>"
                 var mm = (" 
-                    <a class='nav-link" + x + 
+                    <a class='nav-link" + xx + 
                     "' href='" + ee[0] + "'>" + 
                         "<i class='nav-icon bi " + 
                         ee[2] + "'></i>" + tt  
