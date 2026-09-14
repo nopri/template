@@ -80,7 +80,7 @@ web-adminlte4-admin:
     [The currently recommended Singkong web admin template]
     Web: admin, using AdminLTE4, session
     (header/footer, navbar, sidebar, QR Code 
-    toolbar, breadcrumb, query string)
+    toolbar, breadcrumb, change password, query string)
     Bundled (in lib dir): 
     - jQuery
     - DataTables
