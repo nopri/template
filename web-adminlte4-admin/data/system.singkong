@@ -1,1 +1,60 @@
 var app_name = "NAME"
+
+var res_home = fn(p, c, sess) {
+    return ["Home", "bg-danger", random(5, 50)]
+}
+
+var res_admin = fn(p, c, sess) {
+    return ["Admin", "bg-success", "Pro"]
+}
+
+var res_login = fn(p, c, sess) {
+    return ["Login", "", 0]
+}
+
+var res_admin_settings = fn(p, c, sess, t) {
+    return ["Settings", "bg-primary", random(5, 50)]
+}
+
+var res_example = fn(p, c, sess) {
+    return ["Example", "", ""]
+}
+
+var res_example_test = fn(p, c, sess, t) {
+    return ["Test", "", ""]
+}
+
+var resource = [
+    ["home", "home.web", res_home, true, 
+        "bi-house me-2", "", [
+        ], false
+    ],
+    ["admin", "#", res_admin, true, 
+        "bi-gear me-2", "", [
+            ["settings.web", res_admin_settings, 
+                "bi-calendar-event"] 
+        ], true
+    ],
+    ["example", "#", res_example, true, 
+        "bi-file me-2", "", [
+            ["#", res_example_test, ""] 
+            
+        ], false
+    ],
+    ["login", "login.web", res_login, false, 
+        "bi-door-open me-2", "", [
+        ], false
+    ]
+]
+
+var resource_account = [
+    ["", "#", sess["user"], 
+        "bi-person", "text-body"], 
+    [],
+    ["password", "password.web", "Change password", 
+        "bi-key", "text-body"], 
+    [],
+    ["logout", "logout.web", "Logout", 
+        "bi-door-closed", "text-danger"] 
+]
+
