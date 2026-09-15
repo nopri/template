@@ -10,12 +10,25 @@
                 </p>
                 <form id='login' action='login.web' method='post'>
                     <div class='mb-4'>
-                        <input type='text' id='u' name='u' class='form-control' placeholder='Username' autofocus>
+                        <label for='u' class='form-label fw-semibold'>
+                            Username
+                        </label>
+                        <input type='text' id='u' name='u' 
+                            class='form-control' 
+                            placeholder='Enter your username' 
+                            autofocus>
                     </div>
                     <div class='mb-4'>
-                        <input type='password' id='p' name='p' class='form-control' placeholder='Password'>
+                        <label for='p' class='form-label fw-semibold'>
+                            Password
+                        </label>
+                        <input type='password' id='p' name='p' 
+                            class='form-control' 
+                            placeholder='Enter your password'>
                     </div>
-                    <button type='submit' class='btn btn-primary w-100'>Login</button>
+                    <button type='submit' class='btn btn-primary w-100'>
+                        Login
+                    </button>
                 </form>
             </div>
         </div>
