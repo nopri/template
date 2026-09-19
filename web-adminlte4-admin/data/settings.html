@@ -1,12 +1,68 @@
 $v["user"]$
 <hr>
-Date: <input type='text' id='d' readonly>
+<div class='mb-4'>
+    <label class='form-label fw-semibold'>
+    Start and End Dates
+    </label>
+    <div class='row g-2'>
+        <div class='col'>
+            <label for='start' class='form-label'>
+            Start date
+            </label>
+            <input type='text' 
+                id='start' 
+                name='start' 
+                class='form-control' 
+                readonly>
+            <div class='invalid-feedback'>
+                Start date is required
+            </div>
+        </div>
+        <div class='col'>
+            <label for='end' class='form-label'>
+            End date
+            </label>
+            <input type='text' 
+                id='end' 
+                name='end' 
+                class='form-control' 
+                readonly>
+            <div class='invalid-feedback'>
+                End date is required
+            </div>
+        </div>
+        
+    </div>
+    <div class='form-text text-muted'>
+    Start date must be today or later, and end date must be on or after the start date.
+    </div>
+</div>
 <script type='text/javascript'>
     var q = $.noConflict();
     q(document).ready(function() {
-        q('#d').datepicker({
-            format: 'yyyy-mm-dd',
+        var f = 'yyyy-mm-dd';
+        q('#start').datepicker({
+            format: f,
+            startDate: new Date(),
             autoclose: true
         });
+        q('#end').datepicker({
+            format: f,
+            startDate: new Date(),
+            autoclose: true
+        });
+        q('#start').on('changeDate', function(e) {
+            var start = e.date;
+            if (!start) {
+                q('#end').datepicker('setStartDate', null);
+                return null;
+            }
+            var end = q('#end').datepicker('getDate');
+            q('#end').datepicker('setStartDate', start);
+
+            if (end && end < start) {
+                q('#end').datepicker('clearDates');
+            }
+        });    
     });
 </script>
