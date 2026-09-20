@@ -37,6 +37,60 @@ $v["user"]$
     Start date must be today or later, and end date must be on or after the start date.
     </div>
 </div>
+<div class='mb-4'>
+    <div class='d-flex 
+        align-items-center
+        mb-2'>
+
+        <label class='mb-0 form-label fw-semibold'>
+            Next 7 Days
+        </label>
+
+        <div class='ms-auto d-flex gap-2'>
+            <div class='form-check'>
+                <input class='form-check-input' type='checkbox'
+                    id='daysSelectAll'>
+                <label class='user-select-none form-check-label' 
+                    for='daysSelectAll'>
+                    select all
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class='border rounded p-3 overflow-y-auto' 
+        style='max-height: 200px;'>
+        <div class='row row-cols-1 row-cols-md-2 g-2'>
+        $
+            var res = []
+            each(range(0, 7), fn(e, i) {
+                var x = "day_" + i 
+                var d = format_date(day(@, i), "EEEE")
+                var s = "
+                <div class='col'>
+                    <div class='form-check'>
+                        <input class='
+                            form-check-input 
+                            day-item' 
+                            type='checkbox' 
+                            id='" + x + "'
+                            name='day'
+                            value='" + e + "'>
+                        <label class='
+                            user-select-none 
+                            d-block form-check-label'
+                            for='" + x + "'>
+                            " + d + "
+                        </label>
+                    </div>
+                </div>
+                "
+                res + (s)
+            })
+            join(newline(), res)
+        $
+        </div>
+    </div>
+</div>
 <script type='text/javascript'>
     var q = $.noConflict();
     q(document).ready(function() {
@@ -64,5 +118,20 @@ $v["user"]$
                 q('#end').datepicker('clearDates');
             }
         });    
+    
+        
+
+        var daysSelect = q('#daysSelectAll');
+        var dayItem = q('.day-item');
+        daysSelect.on('change', function(e) {
+            dayItem.prop('checked', this.checked);
+            daysSelect.prop('indeterminate', false);
+        });
+        dayItem.on('change', function(e) {
+            var c = dayItem.filter(':checked').length;
+            daysSelect.prop('checked', c == dayItem.length);
+            daysSelect.prop('indeterminate', 
+                c > 0 && c < dayItem.length);
+        });
     });
 </script>
