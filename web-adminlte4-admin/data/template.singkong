@@ -177,6 +177,9 @@ var menu_account = fn(sess, tb) {
         if (empty(e)) {
             ret + "<hr class='dropdown-divider'>"
         } else {
+            if (is(e[2], "FUNCTION")) {
+                set(e, 2, e[2]())
+            }
             ret + ("<a class='dropdown-item 
                                 d-flex 
                                 align-items-center " + 
