@@ -1,55 +1,51 @@
     <div class="row">
-      <div class="col-xl-4 col-sm-6 col-12 mb-4">
-        <div class="card" style='height: 120px;'>
-          <div class="card-body">
-            <div class="d-flex justify-content-between px-md-1">
-              <div class="align-self-center">
-                <img class='img-fluid' 
-                    style='height: 96px' 
-                    src='$v["qr"]$'>
-              </div>
-              <div class="text-end">
-                <h3>QR</h3>
-                <p class="mb-0">Code</p>
-                <p class="mb-0 small">$v["text"]$</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-sm-6 col-12 mb-4">
-        <div class="card" style='height: 120px;'>
-          <div class="card-body">
-            <div class="d-flex justify-content-between px-md-1">
-              <div class="align-self-center">
-                <i class="bi bi-chat text-warning fs-2"></i>
-              </div>
-              <div class="text-end">
-                <h3>9</h3>
-                <p class="mb-0">Comments</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-sm-6 col-12 mb-4">
-        <div class="card" style='height: 120px;'>
-          <div class="card-body">
-            <div class="d-flex justify-content-between px-md-1">
-              <div class="align-self-center">
-                <i class="bi bi-graph-up text-success fs-2"></i>
-              </div>
-              <div class="text-end">
-                <h3>90 %</h3>
-                <p class="mb-0">Rate</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
+        $
+            var res = []
+            each(v, fn(e, i) {
+                res + ("
+                  <div class='col-xl-4 col-sm-6 col-12 mb-4'>
+                    <div class='card' style='height: 120px;'>
+                      <div class='card-body'>
+                        <div class='d-flex justify-content-between px-md-1'>
+                          <div class='align-self-center'>
+                ")
+
+                if (e[0] == "img") {
+                    res + ("
+                            <img class='img-fluid' 
+                                style='height: 96px' 
+                                src='"+e[3]+"'>
+                        
+                    ")
+                }
+                if (e[0] == "icon") {
+                    res + ("
+                            <i class='bi " + e[3] + " fs-2'></i>
+                    ")
+                }
+                res + ("
+                          </div>
+                          <div class='text-end'>
+                            <h3>" + e[1] + "</h3>
+                            <p class='mb-0'>" + e[2] + "</p>
+                ")
+                if (!none(e[4])) {
+                    res + ("<p class='mb-0 small'>" + e[4] + "</p>")
+                }
+
+                res + ("
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ")
+            })
+
+            join(newline(), res)
+        $
+    <div class='row'>
+      <div class='col-md-6'>
         <div class='table-responsive p-2'>
           <table id='table' class='table table-striped table-bordered'>
             <thead>
@@ -79,7 +75,7 @@
           </table>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class='col-md-6'>
         <div id='chart' style='width: 100%; min-height: 300px;'>
         </div>
       </div>
@@ -168,5 +164,9 @@
             ]
         };
         c.setOption(o);
+
+        q(window).on('resize', function() {
+            c.resize();
+        });        
     });
 </script>
