@@ -113,6 +113,16 @@ Install Internet Information Services:
         - Select: CGI and ISAPI Extensions 
   - Click OK
 
+- Note: please make sure the following features
+  are checked:
+  - Internet Information Services
+    - Web Management Tools
+      - IIS Management Console
+    - World Wide Web Services
+      - Common HTTP Features
+        - Static Content
+        - Default Document
+
 Configure Internet Information Services:
 - Run: Internet Information Services (IIS) Manager
 - Features View
