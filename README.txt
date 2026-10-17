@@ -79,8 +79,8 @@ web-mdbootstrap5-admin:
 web-adminlte4-admin:
     [The currently recommended Singkong web admin template]
     Web: admin, using AdminLTE4, session
-    (header/footer, navbar, sidebar, QR Code 
-    toolbar, breadcrumb, change password, query string)
+    (header/footer, navbar, sidebar, QR Code,  
+    toolbar, toolbar badge, breadcrumb, change password, query string)
     Bundled (in lib dir): 
     - jQuery
     - DataTables
