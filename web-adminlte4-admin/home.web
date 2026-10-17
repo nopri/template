@@ -23,8 +23,10 @@ var bc = [
     ["home.web", "Home"]
 ]
 var tb = [
-    ["#", "bi-download"],
-    ["#", "bi-question-circle"]
+    ["#", "bi-download", 
+        [random(5, 50), "bg-danger", "downloadBadge"]
+    ],
+    ["#", "bi-question-circle", []]
 ]
 var n = @ 
 var v = [
