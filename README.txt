@@ -128,7 +128,12 @@ Configure Internet Information Services:
     - At Script Map confirmation dialog for ISAPI extension: Yes
 
 Session directory:
-- set writable by IIS_IUSRS
+- If the Default Web Site's Anonymous Authentication
+  is configured to use the Application Pool Identity,
+  and the application pool is named DefaultAppPool,
+  please grant IIS APPPOOL\DefaultAppPool
+  Modify permissions to the directory
+- Alternative: grant Modify permissions to IIS_IUSRS
 
 web.config file:
 - contains requestFiltering and hiddenSegments settings
