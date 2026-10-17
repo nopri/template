@@ -142,8 +142,28 @@ var toolbar = fn(sess, tb) {
     each(tb, fn(e, i) {
         ret + ("
         <li class='nav-item'>
-            <a class='nav-link px-2' href='" + e[0] + "'>
+            <a class='nav-link px-2' href='" + e[0] + "'>")
+            if (!none(e[2])) {
+                ret + ("
+                <span class='position-relative d-inline-block'>
                 <i class='bi " + e[1] + "'></i>
+                <span class='position-absolute
+                    top-0
+                    start-100
+                    translate-middle
+                    badge rounded-pill " + e[2][1] + "'
+                    id='" + e[2][2] + "'
+                    style='font-size: 0.64rem;'>" +
+                    e[2][0] + "
+                </span>
+                </span>
+                ")
+            } else {
+                ret + ("
+                <i class='bi " + e[1] + "'></i>
+                ")
+            }
+            ret + ("
             </a>
         </li>")
     })
