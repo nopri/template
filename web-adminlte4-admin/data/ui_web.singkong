@@ -149,14 +149,14 @@ return value: STRING (JavaScript code)
                 });
                 modal.show();
             }
-            function "+xs+"(title, content) {
-                "+xf+"(title, content, 'OK', 'Cancel', null)
+            function "+xs+"(title, content, callback) {
+                "+xf+"(title, content, 'OK', 'Cancel', callback);
             }
-            function "+xy+"(title, content) {
-                "+xf+"(title, content, 'Yes', 'No', null)
+            function "+xy+"(title, content, callback) {
+                "+xf+"(title, content, 'Yes', 'No', callback);
             }
             function "+xa+"(title, content) {
-                "+xf+"(title, content, 'OK', '', null)
+                "+xf+"(title, content, 'OK', '', null);
             }
 
         </script>        

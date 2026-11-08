@@ -80,6 +80,32 @@
         </div>
       </div>
     </div>
+    <div class='row'>
+      <div class='col'>
+        <a id='btnShow' class='btn btn-success w-100'>
+            Show
+        </a>
+      </div>
+      <div class='col'>
+        <a id='btnShowInput' class='btn btn-primary w-100'>
+            Show Input
+        </a>
+      </div>
+      <div class='col'>
+        <a id='btnConfirm' class='btn btn-info w-100'>
+            Confirm
+        </a>
+      </div>
+      <div class='col'>
+        <a id='btnConfirmYesNo' class='btn btn-warning w-100'>
+            Confirm Yes No
+        </a>
+      </div>
+      <div class='col'>
+        <a id='btnAlert' class='btn btn-danger w-100'>
+            Alert
+        </a>
+    </div>
 <script type='text/javascript'>
     var q = jQuery.noConflict();
     q(document).ready(function() {
@@ -168,5 +194,75 @@
         q(window).on('resize', function() {
             c.resize();
         });        
+    
+        q('#btnShow').on('click', function(e) {
+            e.preventDefault();
+            var m = `<div>Are you sure you want to 
+                <span class='text-success fw-semibold'>
+                confirm</span> this action?</div>`
+            dialogShow('Please confirm', q(m), 
+                'Yes, proceed', 'No, cancel',
+                function(res) {
+                    if (res) {
+                        dialogAlert('Information', 
+                            'Action confirmed'
+                        );
+                    }
+            });
+        });
+
+        q('#btnShowInput').on('click', function(e) {
+            e.preventDefault();
+            var m = `<div>Are you sure you want to 
+                <span class='text-success fw-semibold'>
+                confirm</span> this action?
+                <br>Enter a note (optional)
+                </div>`
+            dialogShow('Please confirm', q(m), 
+                'Yes, proceed', 'No, cancel',
+                function(res) {
+                    if (res) {
+                        var v = q('#dialogInputVar').val();
+                        dialogAlert('Information', 
+                            'Action confirmed. Note: ' + v
+                        );
+                    }
+            }, 4);
+        });
+        
+        q('#btnConfirm').on('click', function(e) {
+            e.preventDefault();
+            var m = `<div>Are you sure you want to 
+                <span class='text-success fw-semibold'>
+                confirm</span> this action?</div>`
+            dialogConfirm('Please confirm', q(m), 
+                function(res) {
+                    if (res) {
+                        dialogAlert('Information', 
+                            'Action confirmed'
+                        );
+                    }
+            });
+        });
+        
+        q('#btnConfirmYesNo').on('click', function(e) {
+            e.preventDefault();
+            var m = `<div>Are you sure you want to 
+                <span class='text-success fw-semibold'>
+                confirm</span> this action?</div>`
+            dialogConfirmYesNo('Please confirm', q(m), 
+                function(res) {
+                    if (res) {
+                        dialogAlert('Information', 
+                            'Action confirmed'
+                        );
+                    }
+            });
+        });
+        
+        q('#btnAlert').on('click', function(e) {
+            e.preventDefault();
+            dialogAlert('Information', 'Hello, World');
+        });
     });
 </script>
