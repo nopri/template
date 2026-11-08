@@ -80,7 +80,8 @@ web-adminlte4-admin:
     [The currently recommended Singkong web admin template]
     Web: admin, using AdminLTE4, session
     (header/footer, navbar, sidebar, QR Code,  
-    toolbar, toolbar badge, breadcrumb, change password, query string)
+    toolbar, toolbar badge, breadcrumb, ui_web.singkong,   
+    change password, query string)
     Bundled (in lib dir): 
     - jQuery
     - DataTables
@@ -89,6 +90,8 @@ web-adminlte4-admin:
     - bootstrap-datepicker
     - Bootstrap Icons
     - font: Adobe Source Sans 3
+    Bundled (in data dir): 
+    - ui_web.singkong
 
     Please read how to configure web server
 
