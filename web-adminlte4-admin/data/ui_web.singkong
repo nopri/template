@@ -1,0 +1,164 @@
+#
+    Utilities built with Bootstrap 5 and jQuery
+    ui_web.singkong
+
+    For Singkong Programming Language
+    (not part of the built-in modules)
+
+    (c) Noprianto <nop@noprianto.com>
+    (License: Free to use or redistribute, no warranty)
+
+    To use this module:
+    load("/path/to/ui_web.singkong")
+    note: replace with the actual file path
+;
+
+var modal_dialog = fn(x, persistent) 
+"
+[ui_web] function: modal_dialog: generates the following JavaScript functions, each prefixed with the specified prefix: Show, Confirm, ConfirmYesNo, Alert. The Show function also supports text input along with the message (default: 0 lines, not shown). Please see the example in the nopri/template repo. 
+arguments: 2: STRING (prefix) and BOOLEAN (persistent)
+return value: STRING (JavaScript code)
+" 
+{
+    var xt = x + "Title"
+    var xm = x + "Content"
+    var xo = x + "OK"
+    var xc = x + "Cancel"
+    var xf = x + "Show"
+    var xs = x + "Confirm"
+    var xy = x + "ConfirmYesNo"
+    var xa = x + "Alert"
+    var xp = x + "Input"
+    var xv = x + "InputVar"
+    var xd = ""
+    var ok = "OK"
+    var cancel = "Cancel"
+    if (persistent) {
+        var xd = " data-bs-backdrop='static' 
+            data-bs-keyboard='false'
+        "
+    }
+    return "
+        <div class='modal fade' id='"+x+"' tabindex='-1'"+ xd +">
+            <div class='modal-lg modal-dialog modal-dialog-centered'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='"+xt+"'>
+                        </h5>
+                        <button type='button' class='btn-close' 
+                            style='box-shadow: none; outline: none;'
+                            data-bs-dismiss='modal'></button>
+                    </div>
+
+                    <div class='modal-body'>
+                        <div id='"+xm+"'>
+                        </div>
+                        <div id='"+xp+"'>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button'
+                                class='btn btn-secondary'
+                                data-bs-dismiss='modal'
+                                id='"+xc+"'>
+                            "+cancel+"
+                        </button>
+
+                        <button type='button'
+                                class='btn btn-primary'
+                                id='"+xo+"'>
+                            "+ok+"
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            //ui_web.singkong: modal_dialog
+            function "+xf+"(title, content, ok, cancel, callback, rows=0) {
+                var o = jQuery('#"+x+"');
+                var element = o[0];
+                var modal = bootstrap.Modal.getInstance(element);
+                if (!modal) {
+                    modal = new bootstrap.Modal(element);
+                }
+                var message = jQuery('#"+xm+"');
+                
+                jQuery('#"+xt+"').html(title);
+                if (content instanceof jQuery) {
+                    message.empty().append(content);
+                } else {
+                    message.text(content);
+                }
+                var inp = jQuery('#"+xp+"');
+                inp.empty();
+                if (rows > 0) {
+                    var inpType = '';
+                    if (rows == 1) {
+                        inpType = '<input>';
+                    } else {
+                        inpType = '<textarea>';
+                    }
+                    inpText = jQuery(inpType, {
+                        class: 'form-control mt-2',
+                        name: '"+xv+"',
+                        id: '"+xv+"',
+                        rows: rows
+                    });
+                    inp.append(inpText);
+                }
+                var result = false;
+                var finished = false;
+
+                var btnOK = jQuery('#"+xo+"');
+                btnOK.text(ok);
+                if (!ok) {
+                    btnOK.hide();
+                } else {
+                    btnOK.show();
+                }
+                var btnCancel = jQuery('#"+xc+"');
+                btnCancel.text(cancel);
+                if (!cancel) {
+                    btnCancel.hide();
+                } else {
+                    btnCancel.show();
+                }
+                
+                btnOK.off('click');
+                o.off('hidden.bs.modal');
+                o.off('shown.bs.modal');
+
+                btnOK.on('click', function() {
+                    result = true;
+                    modal.hide();
+                });
+                o.on('hidden.bs.modal').on(
+                    'hidden.bs.modal', function() {
+                        if (finished) {
+                            return;
+                        }
+                        finished = true;
+                        if (typeof callback === 'function') {
+                            callback(result);
+                        }
+                    }
+                );
+                o.on('shown.bs.modal', function() {
+                });
+                modal.show();
+            }
+            function "+xs+"(title, content) {
+                "+xf+"(title, content, 'OK', 'Cancel', null)
+            }
+            function "+xy+"(title, content) {
+                "+xf+"(title, content, 'Yes', 'No', null)
+            }
+            function "+xa+"(title, content) {
+                "+xf+"(title, content, 'OK', '', null)
+            }
+
+        </script>        
+    "
+}

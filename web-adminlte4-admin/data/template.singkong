@@ -8,6 +8,9 @@ if (!in(dir(rt_dir), system_file)) {
 var system_path = rt_dir + data_dir + system_file
 load(system_path)
 
+var ui_web_path = rt_dir + data_dir + "ui_web.singkong"
+load(ui_web_path)
+
 var menu = fn(p, c, sess) {
     var ret = []
     var resource_user = []
@@ -330,6 +333,7 @@ var header_ = fn(t, style) {
 var header = fn(t, p, c, sess, bc, tb) {
     return header_(t, "") + "
 <body class='"+ body_class()  +"'>
+    " + modal_dialog("dialog", true) + "
     <div class='app-wrapper'>
         <nav class='app-header navbar navbar-expand bg-body'>
             <div class='container-fluid'>
@@ -392,6 +396,7 @@ var header_min = fn(t, c) {
     return header_base(t) + "
 </head>
 <body class='"+ body_class_base(c)  +"'>
+    " + modal_dialog("dialog", true) + "
 "
 }
 
