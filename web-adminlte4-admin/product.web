@@ -94,14 +94,18 @@ if (request_method() == "POST") {
         if (av < 1) {
             cgi_text("Sorry, this product is no longer available")
         }
+        var ap = product_get_price(products, o, v)
         var res = ifnone(sess["cart_item"], {})
-        var cur = res[v]
+        var k = o + ":" + v
+        var cur = res[k]
         if (none(cur)) {
-            var cur = [1, 0, 0]
+            var cur = [1, ap, 1 * ap]
         } else {
             set(cur, 0, cur[0] + 1)
+            set(cur, 1, ap)
+            set(cur, 2, ap * cur[0])
         }
-        set(res, v, cur)
+        set(res, k, cur)
         set(sess, "cart_item", res)
         session_file_set(s, sess)    
         cgi_text("OK:" + cart_count())
