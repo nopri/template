@@ -4,24 +4,27 @@
         each(keys(products), fn(e, i) {
             var o = products[e]
             each(o[1], fn(ee, ii) {
-                var pr = "product_" + ee[0]
-                p + ("<tr id='"+pr+"'>")
-                p + ("<td>" + o[0] + "</td>")
-                p + ("<td>" + ee[1] + "</td>")
-                p + ("<td>" + ee[2] + "</td>")
-                p + ("<td>" + 
-                "
-                    <a href='#'
-                        class='item me-2'
-                        data-product='"+e+"'
-                        data-variant='"+ee[0]+"'
-                        data-row='"+pr+"'
-                    >
-                    <i class='bi bi-cart-plus'></i>    
-                    </a>
-                " 
-                + "</td>")
-                p + "</tr>"
+                if (ee[3] > 0) {
+                    var pr = "product_" + ee[0]
+                    p + ("<tr class='product' id='"+pr+"'>")
+                    p + ("<td>" + o[0] + "</td>")
+                    p + ("<td>" + ee[1] + "</td>")
+                    p + ("<td>" + ng(ee[2]) + "</td>")
+                    p + ("<td>" + ng(ee[3]) + "</td>")
+                    p + ("<td>" + 
+                    "
+                        <a href='#'
+                            class='item me-2'
+                            data-product='"+e+"'
+                            data-variant='"+ee[0]+"'
+                            data-row='"+pr+"'
+                        >
+                        <i class='bi bi-cart-plus'></i>    
+                        </a>
+                    " 
+                    + "</td>")
+                    p + "</tr>"
+                }
             })
         })
         "
@@ -32,6 +35,7 @@
                 <th>Product</th>
                 <th>Variant</th>
                 <th>Price</th>
+                <th>Available</th>
                 <th>Add to Cart</th>
             </tr>
             </thead>
@@ -64,6 +68,8 @@
             var p = t.data('product');
             var v = t.data('variant');
             var x = t.data('row');
+            q('.product').removeClass('table-success');
+            loadingOverlayShow();
             q.ajax({
                 url: 'product.web',
                 type: 'POST',
@@ -86,6 +92,9 @@
                 error: function(x, status, error) {
                     var m = 'Something went wrong on our server';
                     dialogAlert('Information', m);
+                },
+                complete: function() {
+                    loadingOverlayHide();
                 }
             });
         });

@@ -334,6 +334,7 @@ var header = fn(t, p, c, sess, bc, tb) {
     return header_(t, "") + "
 <body class='"+ body_class()  +"'>
     " + modal_dialog("dialog", true) + "
+    " + loading_overlay("loading", "Please wait...") + "
     <div class='app-wrapper'>
         <nav class='app-header navbar navbar-expand bg-body'>
             <div class='container-fluid'>
@@ -397,6 +398,7 @@ var header_min = fn(t, c) {
 </head>
 <body class='"+ body_class_base(c)  +"'>
     " + modal_dialog("dialog", true) + "
+    " + loading_overlay("loading", "Please wait...") + "
 "
 }
 

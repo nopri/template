@@ -1,3 +1,7 @@
+load_module("util")
+
+var ng = number_group_c_p
+
 var app_name = "NAME"
 
 var res_home = fn(p, c, sess) {
@@ -68,3 +72,17 @@ var cart_count = fn() {
     return sum(n)
 }
 
+var product_get_avail = fn(d, p, v) {
+    var ret = [0]
+    var x = d[p]
+    if (!none(x)) {
+        if (is_array_len(x, 2)) {
+            each(x[1], fn(e, i) {
+                if (e[0] == v) {
+                    set(ret, 0, e[3]) 
+                }
+            })
+        }
+    }
+    return ret[0]
+}

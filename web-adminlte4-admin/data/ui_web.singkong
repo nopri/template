@@ -162,3 +162,54 @@ return value: STRING (JavaScript code)
         </script>        
     "
 }
+
+var loading_overlay = fn(x, m) 
+"
+[ui_web] function: loading_overlay: generates the following JavaScript functions, each prefixed with the specified prefix: OverlayShow and OverlayHide. Please see the example in the nopri/template repo. 
+arguments: 2: STRING (prefix) and STRING (message) 
+return value: STRING (JavaScript code)
+" 
+{
+    var xd = x + "OverlayDiv"
+    var xs = x + "OverlayShow"
+    var xh = x + "OverlayHide"
+    return "
+        <div id='"+xd+"' class='
+            d-none
+            position-fixed
+            top-0
+            start-0
+            w-100
+            h-100
+            justify-content-center
+            align-items-center
+            flex-column
+            '
+            style='
+                z-index: 9000;
+                background: rgba(255, 255, 255, 0.7);
+            '
+        >
+            <div class='spinner-border text-primary'>
+            </div>
+            
+            <div class='mt-2'>
+            "+m+"
+            </div>
+        </div>
+        <script>
+            //ui_web.singkong: loading_overlay 
+            function "+xs+"() {
+                var o = jQuery('#"+xd+"');
+                o.removeClass('d-none');
+                o.addClass('d-flex');
+            }
+
+            function "+xh+"() {
+                var o = jQuery('#"+xd+"');
+                o.removeClass('d-flex');
+                o.addClass('d-none');
+            }
+        </script>
+    "
+}
