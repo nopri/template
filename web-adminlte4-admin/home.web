@@ -23,6 +23,9 @@ var bc = [
     ["home.web", "Home"]
 ]
 var tb = [
+    ["product.web?a=cart", "bi-cart", 
+        [cart_count(), "bg-primary", "cartBadge"]
+    ],
     ["#", "bi-download", 
         [random(5, 50), "bg-danger", "downloadBadge"]
     ],

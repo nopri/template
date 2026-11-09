@@ -37,8 +37,17 @@ if (request_method() == "POST") {
     var u = form["u"]
     var p = form["p"]
     if (u == "admin" & p == "admin") {
+        var cart = ifnone(sess["cart"], "")
+        var cart_item = ifnone(sess["cart_item"], {})
+        
         var sess = session_new()
         set(sess, "user", u)
+        
+        if (!none(cart)) {
+            set(sess, "cart", cart)
+            set(sess, "cart_item", cart_item)
+        }
+        
         session_file_set(s, sess)
         cgi_header(
             header_session(sess) +

@@ -1,0 +1,106 @@
+var b = runtime_command()["dir"] + "/data/"
+var s = runtime_command()["dir"] + "/session/"
+var f = b + "template.singkong"
+var d = b + "product.html"
+load(f)
+
+var public = true
+var products = {
+    "cc": [
+            "Cassava Chips",
+            [
+                ["012345", "Personal", 5], 
+                ["012346", "Family", 6] 
+            ]
+    ],
+    "fc": [
+            "Frozen Cassava",
+            [
+                ["012347", "Personal", 7], 
+                ["012348", "Family", 8] 
+            ]
+    ]
+}
+
+load_module("web")
+var sess = session_file_get(s)
+
+var redir = false
+if (!public) {
+    if (none_or(sess["user"], sess["session"])) {
+        redirect_to("login.web")
+    }
+} else {
+    if (none(sess)) {
+        var sess = session_new()
+        var redir = true
+    }
+}
+if (none(sess["cart"])) {
+    set(sess, "cart", uuid())
+    set(sess, "cart_item", {})
+    session_file_set(s, sess)    
+}
+if (redir) {
+    cgi_header(
+        header_session(sess) +
+        header_location("product.web")
+    )
+}
+
+var t = "Products"
+var p = "product.web"
+var c = "product"
+
+if (request_method() == "GET") {
+    cgi_header()
+    var tb = [
+        ["product.web?a=cart", "bi-cart", 
+            [cart_count(), "bg-primary", "cartBadge"]
+        ],
+        ["#", "bi-download", 
+            [random(5, 50), "bg-danger", "downloadBadge"]
+        ],
+        ["#", "bi-question-circle", []]
+    ]
+    var g = cgi_get()
+    var a = ifnone(g["a"], "") 
+    var n = @ 
+    var v = {
+        "a": a
+    }
+    if (a == "cart") {
+        var t = "Cart"
+    }
+    var bc = [
+        ["index.web", "Application"],
+        ["product.web", t]
+    ]
+    var h = header(t, p, c, sess, bc, tb)
+    println(h)
+    println(template(read(d)))
+    var h = footer(p)
+    println(h)
+    exit()
+}
+
+if (request_method() == "POST") {
+    var p = cgi_post()
+    var a = ifnone(p["a"], "") 
+    var v = ifnone(p["variant"], "") 
+    if (a == "add") {
+        var res = ifnone(sess["cart_item"], {})
+        var cur = res[v]
+        if (none(cur)) {
+            var cur = [1, 0, 0]
+        } else {
+            set(cur, 0, cur[0] + 1)
+        }
+        set(res, v, cur)
+        set(sess, "cart_item", res)
+        session_file_set(s, sess)    
+        cgi_text("OK:" + cart_count())
+    }
+
+    cgi_text("ERROR")
+}
