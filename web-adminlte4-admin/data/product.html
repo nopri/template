@@ -1,0 +1,93 @@
+    $
+    if (v["a"] != "cart") {
+        var p = []
+        each(keys(products), fn(e, i) {
+            var o = products[e]
+            each(o[1], fn(ee, ii) {
+                var pr = "product_" + ee[0]
+                p + ("<tr id='"+pr+"'>")
+                p + ("<td>" + o[0] + "</td>")
+                p + ("<td>" + ee[1] + "</td>")
+                p + ("<td>" + ee[2] + "</td>")
+                p + ("<td>" + 
+                "
+                    <a href='#'
+                        class='item me-2'
+                        data-product='"+e+"'
+                        data-variant='"+ee[0]+"'
+                        data-row='"+pr+"'
+                    >
+                    <i class='bi bi-cart-plus'></i>    
+                    </a>
+                " 
+                + "</td>")
+                p + "</tr>"
+            })
+        })
+        "
+        <div class='table-responsive'>
+        <table id='products' class='table table-striped'>
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Variant</th>
+                <th>Price</th>
+                <th>Add to Cart</th>
+            </tr>
+            </thead>
+            <tbody>
+            " 
+            + join(newline(), p) + 
+            "
+            </tbody>
+        </table>
+        </div>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery('#products').DataTable({
+                    order: [0, 'asc']
+                });
+            });
+        </script>
+        "
+    } else {
+        sess["cart_item"]
+    }
+    $
+
+<script>
+    var q = jQuery.noConflict();
+    q(document).ready(function() {
+        q('.item').on('click', function(e) {
+            e.preventDefault();
+            var t = q(this);
+            var p = t.data('product');
+            var v = t.data('variant');
+            var x = t.data('row');
+            q.ajax({
+                url: 'product.web',
+                type: 'POST',
+                data: {
+                    product: p,
+                    variant: v,
+                    a: 'add'
+                },
+                dataType: 'text',
+                success: function(r) {
+                    if (!r.startsWith('OK')) {
+                        var m = 'Failed to add product to the cart: ' + r;
+                        dialogAlert('Information', m);
+                    } else {
+                        var rs = r.split(':');
+                        q('#cartBadge').text(rs[1]);
+                        q('#' + x).addClass('table-success');
+                    }
+                },
+                error: function(x, status, error) {
+                    var m = 'Something went wrong on our server';
+                    dialogAlert('Information', m);
+                }
+            });
+        });
+    });
+</script>

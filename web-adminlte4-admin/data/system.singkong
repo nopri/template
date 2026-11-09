@@ -58,3 +58,13 @@ var resource_account = [
         "bi-door-closed", "text-danger"] 
 ]
 
+var cart_count = fn() {
+    var n = []
+    var c = ifnone(sess["cart_item"], {})
+    each(keys(c), fn(e, i) {
+        var v = c[e]
+        n + v[0]
+    })
+    return sum(n)
+}
+
