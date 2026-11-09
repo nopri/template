@@ -55,7 +55,48 @@
         </script>
         "
     } else {
-        sess["cart_item"]
+        var p = []
+        var c = sess["cart_item"]
+        each(keys(ifnone(c, {})), fn(e, i) {
+            var s = split(e, ":")
+            var o = product_get_data(products, s[0], s[1])
+            var a = c[e] 
+            var pr = "product_" + o[0]
+            p + ("<tr class='cart' id='"+pr+"'>")
+            p + ("<td>" + o[0] + "</td>")
+            p + ("<td>" + o[1][1] + "</td>")
+            p + ("<td>" + ng(a[0]) + "</td>")
+            p + ("<td>" + ng(a[1]) + "</td>")
+            p + ("<td>" + ng(a[2]) + "</td>")
+            p + "</tr>"
+        })
+        "
+        <div class='table-responsive'>
+        <table id='products' class='table table-striped'>
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Variant</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            " 
+            + join(newline(), p) + 
+            "
+            </tbody>
+        </table>
+        </div>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery('#products').DataTable({
+                    order: [0, 'asc']
+                });
+            });
+        </script>
+        "
     }
     $
 

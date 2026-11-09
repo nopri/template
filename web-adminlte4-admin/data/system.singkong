@@ -72,17 +72,29 @@ var cart_count = fn() {
     return sum(n)
 }
 
-var product_get_avail = fn(d, p, v) {
-    var ret = [0]
+var product_get_data = fn(d, p, v) {
+    var ret = ["", []]
     var x = d[p]
     if (!none(x)) {
         if (is_array_len(x, 2)) {
+            set(ret, 0, x[0])
             each(x[1], fn(e, i) {
                 if (e[0] == v) {
-                    set(ret, 0, e[3]) 
+                    set(ret, 1, e) 
                 }
             })
         }
     }
-    return ret[0]
+    return ret
 }
+
+var product_get_avail = fn(d, p, v) {
+    var d = product_get_data(d, p, v)
+    return ifnone(d[1][3], 0)
+}
+
+var product_get_price = fn(d, p, v) {
+    var d = product_get_data(d, p, v)
+    return ifnone(d[1][2], 0)
+}
+
