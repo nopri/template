@@ -9,15 +9,15 @@ var products = {
     "cc": [
             "Cassava Chips",
             [
-                ["012345", "Personal", 5], 
-                ["012346", "Family", 6] 
+                ["012345", "Personal", 5, 40], 
+                ["012346", "Family", 6, 50] 
             ]
     ],
     "fc": [
             "Frozen Cassava",
             [
-                ["012347", "Personal", 7], 
-                ["012348", "Family", 8] 
+                ["012347", "Personal", 7, 80], 
+                ["012348", "Family", 8, 70] 
             ]
     ]
 }
@@ -87,8 +87,13 @@ if (request_method() == "GET") {
 if (request_method() == "POST") {
     var p = cgi_post()
     var a = ifnone(p["a"], "") 
+    var o = ifnone(p["product"], "") 
     var v = ifnone(p["variant"], "") 
     if (a == "add") {
+        var av = product_get_avail(products, o, v)
+        if (av < 1) {
+            cgi_text("Sorry, this product is no longer available")
+        }
         var res = ifnone(sess["cart_item"], {})
         var cur = res[v]
         if (none(cur)) {
