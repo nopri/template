@@ -110,6 +110,14 @@ if (request_method() == "POST") {
         session_file_set(s, sess)    
         cgi_text("OK:" + cart_count())
     }
+    if (a == "remove") {
+        var res = ifnone(sess["cart_item"], {})
+        var k = o + ":" + v
+        res - k
+        set(sess, "cart_item", res)
+        session_file_set(s, sess)    
+        cgi_text("OK:" + cart_count())
+    }
 
     cgi_text("ERROR")
 }
