@@ -88,6 +88,32 @@
             + "</td>")
             p + "</tr>"
         })
+
+        var t = []
+        if (cart_count() > 0) {
+            t + ("
+            <tfoot>
+                <tr>
+                    <td class='fw-bold'>Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class='fw-bold'>"+ng(cart_total())+"</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='fst-italic'>
+                    "+ words_en(string(cart_total())) +"
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+            ")
+        }
         "
         <a href='product.web'
             class='btn btn-sm btn-primary'
@@ -112,7 +138,12 @@
             + join(newline(), p) + 
             "
             </tbody>
+            " 
+            + join(newline(), t) + 
+            "
         </table>
+        </div>
+        <div class='row'>
         </div>
         <script>
             jQuery(document).ready(function() {

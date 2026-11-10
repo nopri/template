@@ -62,14 +62,22 @@ var resource_account = [
         "bi-door-closed", "text-danger"] 
 ]
 
-var cart_count = fn() {
+var cart_data = fn(x) {
     var n = []
     var c = ifnone(sess["cart_item"], {})
     each(keys(c), fn(e, i) {
         var v = c[e]
-        n + v[0]
+        n + v[x]
     })
     return sum(n)
+}
+
+var cart_count = fn() {
+    return cart_data(0)
+}
+
+var cart_total = fn() {
+    return cart_data(2)
 }
 
 var product_get_data = fn(d, p, v) {
