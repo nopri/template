@@ -138,6 +138,8 @@ if (request_method() == "POST") {
         var d = [
             sess["cart"],
             sess["cart_item"],
+            cart_count(),
+            cart_total(),
             @,
             vn,
             ve,
