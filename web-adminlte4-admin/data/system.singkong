@@ -62,6 +62,12 @@ var resource_account = [
         "bi-door-closed", "text-danger"] 
 ]
 
+var cart_checkout_info = fn() {
+    return [
+        "Please fill out the following checkout form"
+    ]
+}
+
 var cart_data = fn(x) {
     var n = []
     var c = ifnone(sess["cart_item"], {})
