@@ -21,7 +21,7 @@ var menu = fn(p, c, sess) {
         if (e[3] == null) {
             resource_user + e
         } else {
-            if (empty(sess)) {
+            if (none(sess["user"])) {
                 if (e[3] == false) {
                     resource_user + e
                 }
@@ -177,8 +177,12 @@ var toolbar = fn(sess, tb) {
 }
 
 var menu_account = fn(sess, tb) {
-    if (empty(sess)) {
-        return ""
+    if (none(sess["user"])) {
+        return "
+            <ul class='navbar-nav ms-auto'>" +
+                toolbar(sess, tb) + "
+            </ul>
+        "
     }
     var ret = []
     ret + ("

@@ -4,6 +4,8 @@ var ng = number_group_c_p
 
 var app_name = "NAME"
 
+var product_requires_auth = false
+
 var res_home = fn(p, c, sess) {
     return ["Home", "bg-danger", random(5, 50)]
 }
@@ -28,6 +30,10 @@ var res_example_test = fn(p, c, sess, t) {
     return ["Test", "", ""]
 }
 
+var res_product = fn(p, c, sess) {
+    return ["Products", "", 0]
+}
+
 var resource = [
     ["home", "home.web", res_home, true, 
         "bi-house me-2", "", [
@@ -47,6 +53,10 @@ var resource = [
     ],
     ["login", "login.web", res_login, false, 
         "bi-door-open me-2", "", [
+        ], false
+    ],
+    ["product", "product.web", res_product, null, 
+        "bi-cart me-2", "", [
         ], false
     ]
 ]
