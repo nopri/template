@@ -5,22 +5,7 @@ var d = b + "product.html"
 load(f)
 
 var public = !product_requires_auth
-var products = {
-    "cc": [
-            "Cassava Chips",
-            [
-                ["012345", "Personal", 5, 40], 
-                ["012346", "Family", 6, 50] 
-            ]
-    ],
-    "fc": [
-            "Frozen Cassava",
-            [
-                ["012347", "Personal", 7, 80], 
-                ["012348", "Family", 8, 70] 
-            ]
-    ]
-}
+var products = product_data()
 
 load_module("web")
 var sess = session_file_get(s)
