@@ -88,7 +88,11 @@ if (request_method() == "POST") {
     var p = cgi_post()
     var a = ifnone(p["a"], "") 
     var o = ifnone(p["product"], "") 
-    var v = ifnone(p["variant"], "") 
+    var v = ifnone(p["variant"], "")
+    var vn = trim(ifnone(p["name"], ""))
+    var ve = trim(ifnone(p["email"], ""))
+    var va = trim(ifnone(p["address"], ""))
+    var vt = trim(ifnone(p["note"], ""))
     if (a == "add") {
         var av = product_get_avail(products, o, v)
         if (av < 1) {
@@ -117,6 +121,36 @@ if (request_method() == "POST") {
         set(sess, "cart_item", res)
         session_file_set(s, sess)    
         cgi_text("OK:" + cart_count())
+    }
+    if (a == "checkout") {
+        if (none(sess["cart_item"])) {
+            cgi_text("Your shopping cart is currently empty")
+        }
+        if (!isemail(ve)) {
+            cgi_text("Please verify your email address")
+        }
+        if (none(vn)) {
+            cgi_text("Please enter your name")
+        }
+        if (none(va)) {
+            cgi_text("Please enter your shipping address")
+        }
+        var d = [
+            sess["cart"],
+            sess["cart_item"],
+            @,
+            vn,
+            ve,
+            va,
+            vt
+        ]
+        var res = cart_checkout(d)
+        if (none(res)) {
+            cgi_text("Please try again")
+        }
+        set(sess, "cart_item", {})
+        session_file_set(s, sess)    
+        cgi_text("OK")
     }
 
     cgi_text("ERROR")
