@@ -4,7 +4,7 @@ var f = b + "template.singkong"
 var d = b + "product.html"
 load(f)
 
-var public = true
+var public = !product_requires_auth
 var products = {
     "cc": [
             "Cassava Chips",
