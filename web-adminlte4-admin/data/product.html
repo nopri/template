@@ -28,6 +28,12 @@
             })
         })
         "
+        <a href='product.web?a=cart'
+            class='btn btn-sm btn-primary'
+        >
+        View cart
+        </a>
+
         <div class='table-responsive'>
         <table id='products' class='table table-striped'>
             <thead>
@@ -61,16 +67,34 @@
             var s = split(e, ":")
             var o = product_get_data(products, s[0], s[1])
             var a = c[e] 
-            var pr = "product_" + o[0]
+            var pr = "product_" + s[0] + "_" + s[1]
             p + ("<tr class='cart' id='"+pr+"'>")
             p + ("<td>" + o[0] + "</td>")
             p + ("<td>" + o[1][1] + "</td>")
             p + ("<td>" + ng(a[0]) + "</td>")
             p + ("<td>" + ng(a[1]) + "</td>")
             p + ("<td>" + ng(a[2]) + "</td>")
+            p + ("<td>" + 
+            "
+                <a href='#'
+                    class='remove me-2'
+                    data-product='"+s[0]+"'
+                    data-variant='"+s[1]+"'
+                    data-row='"+pr+"'
+                >
+                <i class='bi bi-cart-dash'></i>    
+                </a>
+            " 
+            + "</td>")
             p + "</tr>"
         })
         "
+        <a href='product.web'
+            class='btn btn-sm btn-primary'
+        >
+        Back to Products
+        </a>
+
         <div class='table-responsive'>
         <table id='products' class='table table-striped'>
             <thead>
@@ -80,6 +104,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Subtotal</th>
+                <th>Update</th>
             </tr>
             </thead>
             <tbody>
@@ -136,6 +161,48 @@
                 },
                 complete: function() {
                     loadingOverlayHide();
+                }
+            });
+        });
+        
+        q('.remove').on('click', function(e) {
+            e.preventDefault();
+            var t = q(this);
+            var p = t.data('product');
+            var v = t.data('variant');
+            var x = t.data('row');
+            var m = `<div>Are you sure you want to 
+                <span class='text-danger fw-semibold'>
+                remove</span> this item from your cart?</div>`
+            dialogConfirmYesNo('Please confirm', q(m), 
+            function(res) {
+                if (res) {
+                    loadingOverlayShow();
+                    q.ajax({
+                        url: 'product.web',
+                        type: 'POST',
+                        data: {
+                            product: p,
+                            variant: v,
+                            a: 'remove'
+                        },
+                        dataType: 'text',
+                        success: function(r) {
+                            if (!r.startsWith('OK')) {
+                                var m = 'Failed to remove item from cart: ' + r;
+                                dialogAlert('Information', m);
+                            } else {
+                                window.location.href='product.web?a=cart';
+                            }
+                        },
+                        error: function(x, status, error) {
+                            var m = 'Something went wrong on our server';
+                            dialogAlert('Information', m);
+                        },
+                        complete: function() {
+                            loadingOverlayHide();
+                        }
+                    });
                 }
             });
         });
