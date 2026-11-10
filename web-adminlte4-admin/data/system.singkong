@@ -106,3 +106,6 @@ var product_get_price = fn(d, p, v) {
     return ifnone(d[1][2], 0)
 }
 
+var cart_checkout = fn(d) {
+    return d
+}

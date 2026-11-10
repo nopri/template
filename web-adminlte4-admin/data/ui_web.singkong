@@ -15,7 +15,7 @@
 
 var modal_dialog = fn(x, persistent) 
 "
-[ui_web] function: modal_dialog: generates the following JavaScript functions, each prefixed with the specified prefix: Show, Confirm, ConfirmYesNo, Alert. The Show function also supports text input along with the message (default: 0 lines, not shown). Please see the example in the nopri/template repo. 
+[ui_web] function: modal_dialog: generates the following JavaScript functions, each prefixed with the specified prefix: Show, Confirm, ConfirmYesNo, Alert, AlertOK. The Show function also supports text input along with the message (default: 0 lines, not shown). Please see the example in the nopri/template repo. 
 arguments: 2: STRING (prefix) and BOOLEAN (persistent)
 return value: STRING (JavaScript code)
 " 
@@ -28,6 +28,7 @@ return value: STRING (JavaScript code)
     var xs = x + "Confirm"
     var xy = x + "ConfirmYesNo"
     var xa = x + "Alert"
+    var xn = x + "AlertOK"
     var xp = x + "Input"
     var xv = x + "InputVar"
     var xd = ""
@@ -157,6 +158,9 @@ return value: STRING (JavaScript code)
             }
             function "+xa+"(title, content) {
                 "+xf+"(title, content, 'OK', '', null);
+            }
+            function "+xn+"(title, content, callback) {
+                "+xf+"(title, content, 'OK', '', callback);
             }
 
         </script>        
