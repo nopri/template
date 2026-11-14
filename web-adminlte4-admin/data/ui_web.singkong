@@ -76,7 +76,7 @@ return value: STRING (JavaScript code)
             </div>
         </div>
         <script>
-            //ui_web.singkong: modal_dialog
+            //ui_web.singkong: modal_dialog: prefix " + x + "
             function "+xf+"(title, content, ok, cancel, callback, rows=0) {
                 var o = jQuery('#"+x+"');
                 var element = o[0];
@@ -167,10 +167,10 @@ return value: STRING (JavaScript code)
     "
 }
 
-var loading_overlay = fn(x, m) 
+var loading_overlay_ = fn(x, m, c, o) 
 "
-[ui_web] function: loading_overlay: generates the following JavaScript functions, each prefixed with the specified prefix: OverlayShow and OverlayHide. Please see the example in the nopri/template repo. 
-arguments: 2: STRING (prefix) and STRING (message) 
+[ui_web] function: loading_overlay_: generates the following JavaScript functions, each prefixed with the specified prefix: OverlayShow and OverlayHide. Please see the example in the nopri/template repo. 
+arguments: 4: STRING (prefix), STRING (message), STRING (CSS class), and STRING (opacity, 0 to 1 inclusive)
 return value: STRING (JavaScript code)
 " 
 {
@@ -191,10 +191,10 @@ return value: STRING (JavaScript code)
             '
             style='
                 z-index: 9000;
-                background: rgba(255, 255, 255, 0.7);
+                background: rgba(255, 255, 255, " + o + ");
             '
         >
-            <div class='spinner-border text-primary'>
+            <div class='spinner-border " + c + "'>
             </div>
             
             <div class='mt-2'>
@@ -202,7 +202,7 @@ return value: STRING (JavaScript code)
             </div>
         </div>
         <script>
-            //ui_web.singkong: loading_overlay 
+            //ui_web.singkong: loading_overlay_, loading_overlay: prefix " + x + "  
             function "+xs+"() {
                 var o = jQuery('#"+xd+"');
                 o.removeClass('d-none');
@@ -217,3 +217,14 @@ return value: STRING (JavaScript code)
         </script>
     "
 }
+
+var loading_overlay = fn(x, m) 
+"
+[ui_web] function: loading_overlay: generates the following JavaScript functions, each prefixed with the specified prefix: OverlayShow and OverlayHide. The CSS class for the text is text-primary, and the opacity is 0.8. Please see the example in the nopri/template repo. 
+arguments: 2: STRING (prefix) and STRING (message) 
+return value: STRING (JavaScript code)
+" 
+{
+    return loading_overlay_(x, m, "text-primary", "0.8")
+}
+
