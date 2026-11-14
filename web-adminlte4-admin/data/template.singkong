@@ -363,8 +363,8 @@ var header = fn(t, p, c, sess, bc, tb) {
 
         <aside class='app-sidebar bg-body-secondary shadow'>
             <div class='sidebar-brand'>
-                <a href='#' class='brand-link'>
-                    <span class='brand-text'>" + app_name + "</span>
+                <a href='" + app_link + "' class='brand-link'>
+                    " + app_logo() + "
                 </a>
             </div>
 

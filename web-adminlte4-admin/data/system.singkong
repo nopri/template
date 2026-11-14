@@ -4,6 +4,27 @@ var ng = number_group_c_p
 
 var app_name = "NAME"
 
+var app_link = "home.web"
+
+var app_logo = fn() {
+    #
+    return "
+    <span class='brand-text'>" + app_name + "</span>
+    "
+    ;
+
+    return "
+        <img src='lib/logo.png' class='brand-image' alt='logo'>
+    "
+}
+
+var app_logo_login = fn() {
+    return "
+        <img src='lib/logo.png' alt='logo'
+            class='d-block mx-auto' width='240'>
+    "
+}
+
 var product_requires_auth = false
 
 var res_home = fn(p, c, sess) {
