@@ -98,6 +98,11 @@ web-adminlte4-admin:
     session directory: 
     - set writable by web server user
 
+    Original logo image (logo.ppm):
+    - printf 'P3\n1024 180\n255\n' > logo.ppm
+    - yes '255 255 255' | head -n 184320 >> logo.ppm
+
+
 ------------------------------------------------------------
 
 How to configure web server 
