@@ -117,9 +117,17 @@ web-adminlte4-admin:
       to their cart without logging in.
     - When a user logs in, the items in their guest cart
       are automatically transferred.
-    Note: in order to disable the guest cart, please set
-        var product_requires_auth = false
-    in system.singkong 
+    Note: 
+    - In order to disable the guest cart, please set
+        var product_requires_auth = true
+      in system.singkong 
+    - For guest cart, please make sure that session 
+      directory is writable, even though authentication
+      is not used.
+    - To set actions after checkout, please refer to
+      the cart_checkout function in system.singkong.
+    - To customize the checkout info, please refer to
+      the cart_checkout_info function in system.singkong. 
 
     Please read how to configure web server
 
