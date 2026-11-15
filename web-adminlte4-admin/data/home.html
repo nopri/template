@@ -105,6 +105,12 @@
         <a id='btnAlert' class='btn btn-danger w-100'>
             Alert
         </a>
+      </div>
+      <div class='col'>
+        <a id='btnAlertOK' class='btn btn-secondary w-100'>
+            Alert OK
+        </a>
+      </div>
     </div>
 <script type='text/javascript'>
     var q = jQuery.noConflict();
@@ -263,6 +269,18 @@
         q('#btnAlert').on('click', function(e) {
             e.preventDefault();
             dialogAlert('Information', 'Hello, World');
+        });
+        
+        q('#btnAlertOK').on('click', function(e) {
+            e.preventDefault();
+            dialogAlertOK('Information', 'Hello, World',
+                function(res) {
+                    if (res) {
+                        dialogAlert('Information', 
+                            'Singkong'
+                        );
+                    }
+            });
         });
     });
 </script>
