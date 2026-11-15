@@ -81,6 +81,7 @@ web-adminlte4-admin:
     Web: admin, using AdminLTE4, session
     (header/footer, navbar, sidebar, QR Code,  
     toolbar, toolbar badge, breadcrumb, ui_web.singkong,   
+    product / shopping cart / checkout, 
     change password, query string)
     Bundled (in lib dir): 
     - jQuery
@@ -92,6 +93,33 @@ web-adminlte4-admin:
     - font: Adobe Source Sans 3
     Bundled (in data dir): 
     - ui_web.singkong
+
+    The template calls the following functions
+    from the ui_web.singkong:
+        modal_dialog("dialog", true)
+        loading_overlay("loading", "Please wait...")
+    which generate the following JavaScript functions:
+        dialogShow
+        dialogConfirm
+        dialogConfirmYesNo
+        dialogAlert
+        dialogAlertOK
+        loadingOverlayShow
+        loadingOverlayHide
+    
+        Note: to use a different CSS class and message
+        in the loading overlay, please refer to the 
+        loading_overlay_ function. 
+
+    Product/shopping cart:
+    - This template supports a guest shopping cart
+      that allows users to browse products and add items
+      to their cart without logging in.
+    - When a user logs in, the items in their guest cart
+      are automatically transferred.
+    Note: in order to disable the guest cart, please set
+        var product_requires_auth = false
+    in system.singkong 
 
     Please read how to configure web server
 
