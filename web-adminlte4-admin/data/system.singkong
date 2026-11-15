@@ -100,14 +100,16 @@ var product_data = fn() {
                 [
                     ["012345", "Personal", 5, 40], 
                     ["012346", "Family", 6, 50] 
-                ]
+                ],
+                "Crispy and Delicious"
         ],
         "fc": [
                 "Frozen Cassava",
                 [
                     ["012347", "Personal", 7, 80], 
                     ["012348", "Family", 8, 70] 
-                ]
+                ],
+                "Easy and Delicious"
         ]
     }
 }
@@ -137,14 +139,15 @@ var cart_total = fn() {
 }
 
 var product_get_data = fn(d, p, v) {
-    var ret = ["", []]
+    var ret = ["", [], ""]
     var x = d[p]
     if (!none(x)) {
-        if (is_array_len(x, 2)) {
+        if (is_array_len(x, 3)) {
             set(ret, 0, x[0])
             each(x[1], fn(e, i) {
                 if (e[0] == v) {
                     set(ret, 1, e) 
+                    set(ret, 2, x[2]) 
                 }
             })
         }

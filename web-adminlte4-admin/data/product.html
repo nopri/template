@@ -7,7 +7,12 @@
                 if (ee[3] > 0) {
                     var pr = "product_" + ee[0]
                     p + ("<tr class='product' id='"+pr+"'>")
-                    p + ("<td>" + o[0] + "</td>")
+                    p + ("<td>" 
+                    + o[0] + 
+                    "<br><small class='text-muted'>" 
+                    + o[2] + 
+                    "</small>
+                    </td>")
                     p + ("<td>" + ee[1] + "</td>")
                     p + ("<td>" + ng(ee[2]) + "</td>")
                     p + ("<td>" + ng(ee[3]) + "</td>")
@@ -69,7 +74,12 @@
             var a = c[e] 
             var pr = "product_" + s[0] + "_" + s[1]
             p + ("<tr class='cart' id='"+pr+"'>")
-            p + ("<td>" + o[0] + "</td>")
+            p + ("<td>" 
+            + o[0] + 
+            "<br><small class='text-muted'>" 
+            + o[2] + 
+            "</small>
+            </td>")
             p + ("<td>" + o[1][1] + "</td>")
             p + ("<td>" + ng(a[0]) + "</td>")
             p + ("<td>" + ng(a[1]) + "</td>")
